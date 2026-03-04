@@ -1,0 +1,37 @@
+[
+  {
+    "id": "priya",
+    "name": "Priya Sharma",
+    "url": "https://priyasharma.dev",
+    "tags": ["SWE", "Web"],
+    "blurb": "Full-stack developer passionate about accessible design and open-source tooling."
+  },
+  {
+    "id": "marcus",
+    "name": "Marcus Chen",
+    "url": "https://marcuschen.ca",
+    "tags": ["AI", "ML"],
+    "blurb": "ML researcher exploring computer vision and generative models at Laurier."
+  },
+  {
+    "id": "aisha",
+    "name": "Aisha Okonkwo",
+    "url": "https://aishaokonkwo.com",
+    "tags": ["SWE", "Cloud"],
+    "blurb": "Cloud infrastructure nerd building scalable systems and DevOps pipelines."
+  },
+  {
+    "id": "jordan",
+    "name": "Jordan Lee",
+    "url": "https://jordanlee.dev",
+    "tags": ["Design", "Frontend"],
+    "blurb": "UI/UX designer who codes. Bridging the gap between pixels and production."
+  },
+  {
+    "id": "elena",
+    "name": "Elena Vasquez",
+    "url": "https://elenavasquez.io",
+    "tags": ["Security", "Backend"],
+    "blurb": "Cybersecurity enthusiast and backend engineer. Bug bounty hunter on weekends."
+  }
+]
