@@ -13,11 +13,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Laurier CS WebRing",
+  title: "WLU WebRing",
   description:
     "A ring of Laurier student portfolios. Discover projects, meet builders.",
+  icons: {
+    // Add a version query to bust stubborn favicon caches
+    icon: "/ca_wlfu2.png?v=2",
+  },
   openGraph: {
-    title: "Laurier CS WebRing",
+    title: "WLU WebRing",
     description:
       "A ring of Laurier student portfolios. Discover projects, meet builders.",
     type: "website",
@@ -31,6 +35,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Explicit favicon link to override any default Vercel icon */}
+        <link rel="icon" href="/ca_wlfu2.png?v=2" type="image/png" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

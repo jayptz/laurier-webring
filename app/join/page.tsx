@@ -9,7 +9,7 @@ export default function JoinPage() {
           <a href="/" className="flex items-center gap-2">
             <Image src="/hawk.svg" alt="" width={24} height={24} />
             <span className="text-sm font-semibold text-purple">
-              WLU CS Webring
+              Laurier CS WebRing
             </span>
           </a>
           <a
