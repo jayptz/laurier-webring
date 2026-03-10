@@ -19,6 +19,8 @@ const students = [
   },
 ];
 
+import { RingGraph } from "../components/RingGraph";
+
 const socialIcons: Record<string, JSX.Element> = {
   GitHub: (
     <svg
@@ -53,19 +55,20 @@ export default function Home() {
   return (
     <div className="min-h-screen px-6 py-16 sm:px-12 md:px-20 lg:px-32">
       <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
-        <div className="max-w-md">
+        <div className="max-w-md space-y-6">
           <input
+            id="searchInput"
             type="search"
             placeholder="Search members, tags, or sites..."
             className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-800 shadow-sm outline-none transition focus:border-purple focus:ring-1 focus:ring-purple/60"
           />
-          <div className="mt-4 space-y-2 text-sm text-gray-700">
+          <div className="space-y-2 text-sm text-gray-700">
             {students.map((student) => (
               <div key={student.name} className="flex flex-col">
                 <span className="font-medium text-gray-900">
                   {student.name}
                 </span>
-                <div className="mt-0.5 ml-4 flex items-center gap-2 text-xs text-gray-500">
+                <div className="mt-0.5 flex items-center gap-2 text-xs text-gray-500">
                   <span>{student.year}</span>
                   <a
                     href={student.website}
@@ -152,6 +155,9 @@ export default function Home() {
           </a>
           ).
         </p>
+        <div className="mt-8">
+          <RingGraph members={students} />
+        </div>
         </div>
       </div>
     </div>
