@@ -33,15 +33,16 @@ export function RingGraph({ members, count = 40 }: RingGraphProps) {
     if (!containerRef.current || !members.length) return;
 
     const container = containerRef.current;
-    container.innerHTML = "";
+    // clear any previous render
+    while (container.firstChild) container.removeChild(container.firstChild);
 
     const width = container.clientWidth || 360;
     const height = container.clientHeight || 360;
 
     const nodeRadius = 8;
-    const defaultNodeColor = "#B8B8B8";
-    const highlightedNodeColor = "#4B2E83";
-    const defaultEdgeColor = "#E5E5E5";
+    const defaultNodeColor = "#FFD54F"; // Laurier gold
+    const highlightedNodeColor = "#4B2E83"; // Laurier purple
+    const defaultEdgeColor = "#4B2E83"; // Laurier purple
 
     // build node data (expand to `count` members)
     const sites: SimNode[] = [];
@@ -104,9 +105,9 @@ export function RingGraph({ members, count = 40 }: RingGraphProps) {
       .data(links)
       .enter()
       .append("line")
-      .attr("stroke", defaultEdgeColor)
+      .attr("stroke", "#7851A9")
       .attr("stroke-opacity", 1)
-      .attr("stroke-width", 1);
+      .attr("stroke-width", 1.5);
 
     // nodes
     const node = g
@@ -185,7 +186,7 @@ export function RingGraph({ members, count = 40 }: RingGraphProps) {
       const h = container.clientHeight || height;
 
       const scale =
-        Math.min(w / (maxX - minX), h / (maxY - minY)) * 0.7;
+        Math.min(w / (maxX - minX), h / (maxY - minY)) * 1.4;
       const centerX = (minX + maxX) / 2;
       const centerY = (minY + maxY) / 2;
 

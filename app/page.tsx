@@ -116,7 +116,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-        <div className="max-w-lg md:text-right md:ml-0 md:self-start">
+        <div className="max-w-lg md:text-right md:ml-0 md:self-start md:flex-shrink-0">
         <p className="text-base leading-relaxed text-gray-600">
           Welcome to the official{" "}
           <span className="relative inline-block group">
@@ -153,9 +153,15 @@ export default function Home() {
           >
             PRs
           </a>
-          ).
+          ).{" "}
+          <a
+            href="/connect"
+            className="text-purple-700 underline decoration-purple/30 underline-offset-2 transition-colors hover:text-purple-dark hover:decoration-purple"
+          >
+            Connect your site &rarr;
+          </a>
         </p>
-        <div className="mt-8">
+        <div className="mt-8 w-full" style={{ minHeight: 360 }}>
           <RingGraph members={students} />
         </div>
         </div>

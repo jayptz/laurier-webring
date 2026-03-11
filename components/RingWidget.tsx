@@ -1,49 +1,40 @@
-import Image from "next/image";
-
-interface RingWidgetProps {
+type RingWidgetProps = {
   memberId?: string;
   baseUrl?: string;
-  preview?: boolean;
-}
+};
 
-export default function RingWidget({
+export function RingWidget({
   memberId = "YOUR_ID",
-  baseUrl = "",
-  preview = false,
+  baseUrl = "https://laurier-webring.vercel.app",
 }: RingWidgetProps) {
-  const prevHref = preview ? "#" : `${baseUrl}/api/prev?from=${memberId}`;
-  const nextHref = preview ? "#" : `${baseUrl}/api/next?from=${memberId}`;
-  const randomHref = preview ? "#" : `${baseUrl}/api/random`;
-
   return (
-    <div className="inline-flex items-center gap-4 rounded-full border border-[#4B2E83]/20 bg-white px-6 py-3 shadow-sm">
+    <nav className="inline-flex items-center gap-4 rounded-full border border-purple-200 bg-white px-5 py-2 text-sm shadow-sm">
       <a
-        href={prevHref}
-        className="text-sm font-medium text-[#4B2E83] transition-colors hover:text-[#3a2366]"
-        aria-label="Previous member"
+        href={`${baseUrl}/api/prev?from=${memberId}`}
+        className="font-medium text-purple-700 transition-colors hover:text-purple-900"
       >
-        ← Prev
+        &larr; Prev
       </a>
       <a
-        href={randomHref}
-        className="flex items-center"
-        aria-label="Random member"
+        href={baseUrl}
+        className="flex items-center gap-1.5"
       >
-        <Image
-          src="/hawk.svg"
-          alt="Laurier Golden Hawk"
-          width={32}
-          height={32}
-          className="opacity-90 transition-opacity hover:opacity-100"
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={`${baseUrl}/ca_wlfu2.png`}
+          alt="WLU Golden Hawk"
+          width={24}
+          height={24}
+          className="h-6 w-6"
         />
+        <span className="font-semibold text-purple-800">WLU</span>
       </a>
       <a
-        href={nextHref}
-        className="text-sm font-medium text-[#4B2E83] transition-colors hover:text-[#3a2366]"
-        aria-label="Next member"
+        href={`${baseUrl}/api/next?from=${memberId}`}
+        className="font-medium text-purple-700 transition-colors hover:text-purple-900"
       >
-        Next →
+        Next &rarr;
       </a>
-    </div>
+    </nav>
   );
 }
