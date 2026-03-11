@@ -7,7 +7,7 @@ export default function JoinPage() {
       <nav className="fixed top-0 z-50 w-full border-b border-gray-200/60 bg-white/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
           <a href="/" className="flex items-center gap-2">
-            <Image src="/hawk.svg" alt="" width={24} height={24} />
+            <Image src="/Old_Waterloo_Lutheran_Golden_Hawks.png" alt="" width={24} height={24} />
             <span className="text-sm font-semibold text-purple">
               Laurier CS WebRing
             </span>

@@ -21,13 +21,13 @@ export function RingWidget({
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={`${baseUrl}/ca_wlfu2.png`}
-          alt="WLU Golden Hawk"
+          src="/Old_Waterloo_Lutheran_Golden_Hawks.png"
+          alt="Golden Hawk"
           width={24}
           height={24}
           className="h-6 w-6"
         />
-        <span className="font-semibold text-purple-800">WLU</span>
+        <span className="font-semibold text-purple-800"></span>
       </a>
       <a
         href={`${baseUrl}/api/next?from=${memberId}`}

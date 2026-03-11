@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# WLU WebRing
+
+A webring of Laurier CS student portfolios. Discover projects, meet builders.
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to see the site.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Connect Your Site
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Want to join the ring? Visit [/connect](http://localhost:3000/connect) for instructions.
 
-## Learn More
+### Quick steps
 
-To learn more about Next.js, take a look at the following resources:
+1. Fork this repo and add yourself to `data/members.json`:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```json
+{
+  "id": "your-name",
+  "name": "Your Name",
+  "url": "https://your-site.com",
+  "tags": ["SWE", "AI"],
+  "blurb": "A short description of what you do."
+}
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. Open a pull request
+3. Once merged, add the webring widget to your site's footer:
 
-## Deploy on Vercel
+```html
+<!-- WLU WebRing Widget -->
+<div style="display:flex;justify-content:center;padding:16px 0;">
+  <nav style="display:inline-flex;align-items:center;gap:16px;border:1px solid #E5E0FF;border-radius:9999px;background:#fff;padding:8px 20px;font-family:system-ui,sans-serif;font-size:14px;">
+    <a href="https://laurier-webring.vercel.app/api/prev?from=YOUR_ID" style="color:#4B2E83;text-decoration:none;font-weight:500;">&larr; Prev</a>
+    <a href="https://laurier-webring.vercel.app" style="display:flex;align-items:center;gap:6px;text-decoration:none;">
+      <img src="https://laurier-webring.vercel.app/wlu-logo.png" alt="WLU" width="24" height="24">
+      <span style="font-weight:600;color:#4B2E83;">WLU</span>
+    </a>
+    <a href="https://laurier-webring.vercel.app/api/next?from=YOUR_ID" style="color:#4B2E83;text-decoration:none;font-weight:500;">Next &rarr;</a>
+  </nav>
+</div>
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Replace `YOUR_ID` with your member id from `members.json`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## API Routes
+
+| Route | Description |
+|---|---|
+| `GET /api/members` | Returns the full member list |
+| `GET /api/next?from=<id>` | Redirects to the next member (wraps around) |
+| `GET /api/prev?from=<id>` | Redirects to the previous member (wraps around) |
+| `GET /api/random` | Redirects to a random member |
+
+## Tech Stack
+
+- [Next.js](https://nextjs.org) (App Router)
+- [Tailwind CSS](https://tailwindcss.com)
+- [D3.js](https://d3js.org) (force-directed graph)

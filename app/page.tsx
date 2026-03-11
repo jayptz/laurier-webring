@@ -20,6 +20,7 @@ const students = [
 ];
 
 import { RingGraph } from "../components/RingGraph";
+import { RingWidget } from "../components/RingWidget";
 
 const socialIcons: Record<string, JSX.Element> = {
   GitHub: (
@@ -54,6 +55,9 @@ const socialIcons: Record<string, JSX.Element> = {
 export default function Home() {
   return (
     <div className="min-h-screen px-6 py-16 sm:px-12 md:px-20 lg:px-32">
+      <div className="fixed bottom-6 left-6 z-50">
+        <RingWidget memberId="priya" />
+      </div>
       <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
         <div className="max-w-md space-y-6">
           <input

@@ -5,7 +5,7 @@ const embedSnippet = `<!-- WLU WebRing Widget -->
   <nav style="display:inline-flex;align-items:center;gap:16px;border:1px solid #E5E0FF;border-radius:9999px;background:#fff;padding:8px 20px;font-family:system-ui,sans-serif;font-size:14px;box-shadow:0 1px 2px rgba(0,0,0,0.05);">
     <a href="https://laurier-webring.vercel.app/api/prev?from=YOUR_ID" style="color:#4B2E83;text-decoration:none;font-weight:500;">&larr; Prev</a>
     <a href="https://laurier-webring.vercel.app" style="display:flex;align-items:center;gap:6px;text-decoration:none;">
-      <img src="https://laurier-webring.vercel.app/ca_wlfu2.png" alt="WLU" width="24" height="24" style="height:24px;width:24px;">
+      <img src="https://laurier-webring.vercel.app/wlu-logo.png" alt="WLU" width="24" height="24" style="height:24px;width:24px;">
       <span style="font-weight:600;color:#4B2E83;">WLU</span>
     </a>
     <a href="https://laurier-webring.vercel.app/api/next?from=YOUR_ID" style="color:#4B2E83;text-decoration:none;font-weight:500;">Next &rarr;</a>

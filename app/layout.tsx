@@ -17,8 +17,7 @@ export const metadata: Metadata = {
   description:
     "A ring of Laurier student portfolios. Discover projects, meet builders.",
   icons: {
-    // Add a version query to bust stubborn favicon caches
-    icon: "/ca_wlfu2.png?v=2",
+    icon: "/favicon.ico",
   },
   openGraph: {
     title: "WLU WebRing",
@@ -37,7 +36,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {/* Explicit favicon link to override any default Vercel icon */}
-        <link rel="icon" href="/ca_wlfu2.png?v=2" type="image/png" />
+        <link rel="icon" href="/favicon.ico" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
