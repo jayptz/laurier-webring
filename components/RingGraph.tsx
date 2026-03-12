@@ -11,7 +11,6 @@ type Member = {
 
 type RingGraphProps = {
   members: Member[];
-  count?: number;
 };
 
 interface SimNode extends d3.SimulationNodeDatum {
@@ -26,7 +25,7 @@ interface SimLink extends d3.SimulationLinkDatum<SimNode> {
   target: SimNode | string;
 }
 
-export function RingGraph({ members, count = 40 }: RingGraphProps) {
+export function RingGraph({ members }: RingGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -44,17 +43,13 @@ export function RingGraph({ members, count = 40 }: RingGraphProps) {
     const highlightedNodeColor = "#4B2E83"; // Laurier purple
     const defaultEdgeColor = "#4B2E83"; // Laurier purple
 
-    // build node data (expand to `count` members)
-    const sites: SimNode[] = [];
-    for (let i = 0; i < count; i += 1) {
-      const source = members[i % members.length];
-      sites.push({
-        id: `node-${i}`,
-        name: `${source.name}${Math.floor(i / members.length) > 0 ? ` ${Math.floor(i / members.length) + 1}` : ""}`,
-        website: source.website,
-        year: source.year ?? "",
-      });
-    }
+    // build node data from members
+    const sites: SimNode[] = members.map((source, i) => ({
+      id: `node-${i}`,
+      name: source.name,
+      website: source.website,
+      year: source.year ?? "",
+    }));
 
     // ring links
     const links: SimLink[] = sites.map((site, index) => ({
@@ -124,17 +119,77 @@ export function RingGraph({ members, count = 40 }: RingGraphProps) {
           .on("end", dragended)
       );
 
+    function showTooltip(event: MouseEvent, d: SimNode) {
+      hideTooltip();
+
+      const x = event.clientX + 12;
+      const y = event.clientY - 8;
+
+      const tooltip = d3
+        .select("body")
+        .append("div")
+        .attr("class", "ring-graph-tooltip")
+        .style("position", "fixed")
+        .style("left", `${x}px`)
+        .style("top", `${y}px`)
+        .style("background", "#fff")
+        .style("color", "#1f2937")
+        .style("padding", "10px 14px")
+        .style("border", "1px solid #E5E0FF")
+        .style("border-radius", "8px")
+        .style("font-family", "system-ui, sans-serif")
+        .style("font-size", "12px")
+        .style("pointer-events", "auto")
+        .style("z-index", "99999")
+        .style("box-shadow", "0 4px 12px rgba(0,0,0,0.15)")
+        .style("max-width", "220px")
+        .html(
+          `<div style="font-weight:600;color:#4B2E83;">${d.name}</div>` +
+            (d.year ? `<div style="margin-top:2px;color:#6b7280;font-size:11px;">${d.year}</div>` : "") +
+            `<a href="${d.website.replace(/"/g, "&quot;")}" target="_blank" rel="noopener noreferrer" style="margin-top:8px;display:inline-block;color:#D4A017;font-size:11px;font-weight:500;text-decoration:none;cursor:pointer;">Click to visit →</a>`
+        )
+        .on("mouseover", cancelHideTooltip)
+        .on("mouseout", scheduleHideTooltip);
+    }
+
+    let hideTooltipTimer: ReturnType<typeof setTimeout>;
+    function hideTooltip() {
+      d3.select("body").selectAll(".ring-graph-tooltip").remove();
+    }
+    function scheduleHideTooltip() {
+      clearTimeout(hideTooltipTimer);
+      hideTooltipTimer = setTimeout(hideTooltip, 150);
+    }
+    function cancelHideTooltip() {
+      clearTimeout(hideTooltipTimer);
+    }
+
     node
       .append("circle")
       .attr("r", nodeRadius)
       .attr("fill", defaultNodeColor)
-      .on("mouseover", function () {
-        d3.select(this).attr("fill", highlightedNodeColor);
+      .style("cursor", "pointer");
+
+    node
+      .style("cursor", "pointer")
+      .on("mouseover", function (event, d) {
+        cancelHideTooltip();
+        d3.select(this).select("circle").attr("fill", highlightedNodeColor);
         svg.style("cursor", "pointer");
+        showTooltip(event as MouseEvent, d);
       })
       .on("mouseout", function (_event, d) {
-        d3.select(this).attr("fill", getNodeColor(d));
+        d3.select(this).select("circle").attr("fill", getNodeColor(d));
         svg.style("cursor", "move");
+        scheduleHideTooltip();
+      })
+      .on("mousemove", function (event) {
+        cancelHideTooltip();
+        const t = d3.select("body").selectAll(".ring-graph-tooltip");
+        if (!t.empty()) {
+          const e = event as MouseEvent;
+          t.style("left", `${e.clientX + 12}px`).style("top", `${e.clientY - 8}px`);
+        }
       })
       .on("click", (_event, d) => {
         window.open(d.website, "_blank");
@@ -326,7 +381,7 @@ export function RingGraph({ members, count = 40 }: RingGraphProps) {
       window.removeEventListener("resize", handleResize);
       container.innerHTML = "";
     };
-  }, [members, count]);
+  }, [members]);
 
   return (
     <div
