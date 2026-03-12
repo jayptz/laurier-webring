@@ -2,18 +2,21 @@ const students = [
   {
     name: "Jay Patel",
     year: "Software Developer @ RBC",
+    gradYear: "2027",
     website: "https://jayptz.me",
     socials: ["GitHub", "LinkedIn", "Twitter"],
   },
   {
     name: "Grishma Gosain",
     year: "Product Analyst @ RBC",
+    gradYear: "2027",
     website: "https://grishmagosainuxporfolio.framer.website/",
     socials: ["GitHub"],
   },
   {
     name: "Vrunda Shah",
     year: "3rd year CS",
+    gradYear: "2027",
     website: "http://vrunda.me",
     socials: ["GitHub"],
   },
@@ -35,7 +38,7 @@ export default function Home() {
         <p className="text-base leading-relaxed text-gray-600">
           Welcome to the official{" "}
           <span className="relative inline-block group">
-            <span className="underline decoration-dotted underline-offset-2 cursor-help">
+            <span className="bg-yellow-200 underline decoration-dotted underline-offset-2 cursor-help">
               webring
             </span>
             <span className="pointer-events-none absolute left-1/2 top-full z-10 mt-2 w-64 -translate-x-1/2 rounded-md bg-gray-900 px-3 py-2 text-xs leading-snug text-white shadow-lg opacity-0 transition-opacity duration-150 group-hover:opacity-100">

@@ -5,6 +5,7 @@ import { useState, useCallback } from "react";
 type Student = {
   name: string;
   year: string;
+  gradYear?: string;
   website: string;
   socials: string[];
 };
@@ -27,11 +28,17 @@ const socialIcons: Record<string, JSX.Element> = {
   ),
 };
 
+function truncate(str: string, maxLen = 15): string {
+  if (str.length <= maxLen) return str;
+  return str.slice(0, maxLen) + "...";
+}
+
 function matchesSearch(student: Student, term: string): boolean {
   const t = term.toLowerCase();
   return (
     student.name.toLowerCase().includes(t) ||
     student.year.toLowerCase().includes(t) ||
+    (student.gradYear?.toLowerCase().includes(t) ?? false) ||
     student.website.toLowerCase().includes(t)
   );
 }
@@ -52,69 +59,83 @@ export function SearchableMemberList({
   }, []);
 
   return (
-    <div className="max-w-md space-y-6">
+    <div className="w-full max-w-xl space-y-6">
       <input
         id="searchInput"
         type="search"
         value={search}
         onChange={handleInput}
-        placeholder="Search name, role, company"
+        placeholder="Search names, role, company"
         className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-base text-gray-800 shadow-sm outline-none transition focus:border-purple focus:ring-1 focus:ring-purple/60"
       />
-      <div className="space-y-2 text-sm text-gray-700">
-        {filtered.length === 0 ? (
-          <p className="text-sm text-gray-500">No members match your search.</p>
-        ) : (
-          filtered.map((student) => (
-          <div key={student.name} className="flex flex-col">
-            <span className="font-medium text-gray-900">{student.name}</span>
-            <div className="mt-0.5 flex items-center gap-2 text-xs text-gray-500">
-              <span>{student.year}</span>
-              <a
-                href={student.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-purple-50 text-purple-700 hover:bg-purple-100"
-                aria-label="Portfolio"
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                  className="h-3 w-3"
-                >
-                  <path
-                    d="M10.59 13.41a1.5 1.5 0 0 0 2.12 0l3.88-3.88a3 3 0 0 0-4.24-4.24L10 7.64"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M13.41 10.59a1.5 1.5 0 0 0-2.12 0l-3.88 3.88a3 3 0 0 0 4.24 4.24L14 16.36"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </a>
-              <div className="flex gap-1">
-                {student.socials.map((social) => (
-                  <span
-                    key={social}
-                    className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-purple-50 text-purple-700"
-                    aria-label={social}
-                  >
-                    {socialIcons[social]}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-          ))
-        )}
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[400px] text-sm border-collapse table-fixed">
+          <colgroup>
+            <col style={{ width: "auto" }} />
+            <col style={{ width: "7rem" }} />
+            <col style={{ width: "5rem" }} />
+            <col style={{ width: "18ch" }} />
+          </colgroup>
+          <thead>
+            <tr className="border-b border-gray-200">
+              <th className="pb-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Name</th>
+              <th className="pb-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 w-28">Socials</th>
+              <th className="pb-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 w-20">Year</th>
+              <th className="pb-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 w-[18ch]">Website</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filtered.length === 0 ? (
+              <tr>
+                <td colSpan={4} className="pt-4 text-sm text-gray-500">
+                  No members match your search.
+                </td>
+              </tr>
+            ) : (
+              filtered.map((student) => (
+                <tr key={student.name} className="border-b border-gray-100">
+                  <td className="py-4 pr-1 align-top">
+                    <div>
+                      <span className="font-medium text-gray-900" title={student.name}>
+                        {student.name}
+                      </span>
+                      <span className="block text-xs text-gray-600 mt-0.5" title={student.year}>
+                        {student.year}
+                      </span>
+                    </div>
+                  </td>
+                  <td className="py-4 pr-4 align-top">
+                    <div className="flex gap-1 items-center">
+                      {student.socials.map((social) => (
+                        <span
+                          key={social}
+                          className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-purple-50 text-purple-700 hover:bg-purple-100 [&>svg]:block [&>svg]:shrink-0"
+                          aria-label={social}
+                        >
+                          {socialIcons[social]}
+                        </span>
+                      ))}
+                    </div>
+                  </td>
+                  <td className="py-4 pr-4 align-top text-gray-600">
+                    {student.gradYear ?? "2027"}
+                  </td>
+                  <td className="py-4 align-top">
+                    <a
+                      href={student.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-purple-700 underline decoration-purple/30 underline-offset-2 hover:text-purple-900 font-mono"
+                      title={student.website}
+                    >
+                      {truncate(student.website.replace(/^https?:\/\//, "").replace(/\/$/, ""), 15)}
+                    </a>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );
