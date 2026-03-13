@@ -77,7 +77,7 @@ export function SearchableMemberList({
             <col style={{ width: "18ch" }} />
           </colgroup>
           <thead>
-            <tr className="border-b border-gray-200">
+            <tr className="border-b border-purple-500">
               <th className="pb-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Name</th>
               <th className="pb-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 w-28">Socials</th>
               <th className="pb-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 w-20">Year</th>
@@ -93,7 +93,7 @@ export function SearchableMemberList({
               </tr>
             ) : (
               filtered.map((student) => (
-                <tr key={student.name} className="border-b border-gray-100">
+                <tr key={student.name} className="border-b border-purple-500">
                   <td className="py-4 pr-1 align-top">
                     <div>
                       <span className="font-medium text-gray-900" title={student.name}>
@@ -125,7 +125,7 @@ export function SearchableMemberList({
                       href={student.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-purple-700 underline decoration-purple/30 underline-offset-2 hover:text-purple-900 font-mono"
+                      className="text-yellow-600 underline decoration-yellow-500/50 underline-offset-2 hover:text-yellow-700 font-mono"
                       title={student.website}
                     >
                       {truncate(student.website.replace(/^https?:\/\//, "").replace(/\/$/, ""), 15)}
