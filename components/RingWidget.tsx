@@ -8,10 +8,10 @@ export function RingWidget({
   baseUrl = "https://laurier-webring.vercel.app",
 }: RingWidgetProps) {
   return (
-    <nav className="inline-flex items-center gap-4 text-sm">
+    <nav className="inline-flex items-center gap-4 text-sm text-gray-600">
       <a
         href={`${baseUrl}/api/prev?from=${memberId}`}
-        className="font-medium text-purple-700 transition-colors hover:text-purple-900"
+        className="font-medium transition-colors hover:text-gray-900"
       >
         &larr; 
       </a>
@@ -21,17 +21,17 @@ export function RingWidget({
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/Old_Waterloo_Lutheran_Golden_Hawks.png"
+          src="/laurier-goldenhawk.svg"
           alt="Golden Hawk"
           width={24}
           height={24}
-          className="h-6 w-6"
+          className="h-6 w-6 grayscale"
         />
-        <span className="font-semibold text-purple-800"></span>
+        <span className="font-semibold text-gray-800"></span>
       </a>
       <a
         href={`${baseUrl}/api/next?from=${memberId}`}
-        className="font-medium text-purple-700 transition-colors hover:text-purple-900"
+        className="font-medium transition-colors hover:text-gray-900"
       >
          &rarr;
       </a>

@@ -49,12 +49,8 @@ import { SearchableMemberList } from "../components/SearchableMemberList";
 export default function Home() {
   return (
     <div className="min-h-screen px-6 py-16 sm:px-12 md:px-20 lg:px-32">
-      <div className="fixed bottom-6 left-6 z-50">
-        <RingWidget memberId="priya" />
-      </div>
       <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
-        <SearchableMemberList students={students} />
-        <div className="max-w-lg md:text-right md:ml-0 md:self-start md:shrink-0">
+        <div className="max-w-lg md:ml-0 md:self-start md:shrink-0">
         <p className="text-base leading-relaxed text-gray-600">
           Welcome to the official{" "}
           <span className="relative inline-block group">
@@ -76,22 +72,21 @@ export default function Home() {
           >
             WLU
           </a>{" "}
-          in Ontario, Canada. This is an ongoing project to document one of the
-          most talented student bodies in the world, all while making them more
-          visible to the public.
+          in Ontario, Canada. This is an ongoing project to showcase talent across Laurier. Look through the Hawks and see their work. 
         </p>
         <p className="mt-6 text-base leading-relaxed text-gray-600">
-          If you&apos;re one of us, we welcome you with open arms (or in this
-          case, open{" "}
+          Admission is simple: ship something, then open a{" "}
           <a
             href="https://github.com/jayptz/laurier-webring"
             target="_blank"
             rel="noopener noreferrer"
             className="text-purple-700 underline decoration-purple/30 underline-offset-2 transition-colors hover:text-purple-dark hover:decoration-purple"
           >
-            PRs
+            PR
           </a>
-          ).{" "}
+          .
+        </p>
+        <p className="mt-2 text-base leading-relaxed text-gray-600">
           <a
             href="/connect"
             className="text-purple-700 underline decoration-purple/30 underline-offset-2 transition-colors hover:text-purple-dark hover:decoration-purple"
@@ -103,6 +98,10 @@ export default function Home() {
           <RingGraph members={students} />
         </div>
         </div>
+        <SearchableMemberList students={students} />
+      </div>
+      <div className="mt-14 flex justify-center pb-8">
+        <RingWidget memberId="priya" />
       </div>
     </div>
   );

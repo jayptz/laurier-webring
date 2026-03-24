@@ -17,7 +17,13 @@ export default function ConnectPage() {
     <div className="min-h-screen px-6 py-16 sm:px-12 md:px-20 lg:px-32">
       <div className="mx-auto max-w-2xl space-y-12">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">
+          <a
+            href="/"
+            className="text-sm text-black-700 underline decoration-purple/30 underline-offset-2 hover:decoration-purple"
+          >
+            &larr; Back to the <a className="text-purple-700">Wing</a>
+          </a>
+          <h1 className="mt-6 text-2xl font-bold text-gray-900">
             Connect Your Site
           </h1>
           <p className="mt-3 text-base leading-relaxed text-gray-600">
@@ -87,15 +93,6 @@ export default function ConnectPage() {
             <code className="text-purple-600">YOUR_ID</code> with your member
             id from members.json.
           </p>
-        </div>
-
-        <div className="border-t border-gray-100 pt-8">
-          <a
-            href="/"
-            className="text-sm text-purple-700 underline decoration-purple/30 underline-offset-2 hover:decoration-purple"
-          >
-            &larr; Back to the ring
-          </a>
         </div>
       </div>
     </div>
