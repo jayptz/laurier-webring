@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import * as d3 from "d3";
 
-import { memberListTableViewportHeight } from "@/lib/memberListLayout";
+import { ringGraphHeight } from "@/lib/memberListLayout";
 
 type Member = {
   name: string;
@@ -401,7 +401,7 @@ export function RingGraph({ members }: RingGraphProps) {
   const countLabel = `${count} ${count === 1 ? "student" : "Hawks"}`;
 
   return (
-    <div className="relative w-full overflow-hidden rounded-none border border-border bg-background shadow-none">
+    <div className="relative w-full overflow-hidden rounded-none border border-border bg-card shadow-sm ring-1 ring-purple/10">
       <div
         className="pointer-events-none absolute left-3 top-3 z-10 rounded-md border border-border bg-background/90 px-2.5 py-1 text-sm font-medium text-foreground/90 backdrop-blur-sm"
         aria-live="polite"
@@ -411,7 +411,7 @@ export function RingGraph({ members }: RingGraphProps) {
       <div
         ref={containerRef}
         className="w-full overflow-hidden"
-        style={{ height: memberListTableViewportHeight() }}
+        style={{ height: ringGraphHeight() }}
       />
     </div>
   );
