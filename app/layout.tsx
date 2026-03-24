@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { TilesBackground } from "../components/TilesBackground";
+import { AnimatedGridBackground } from "../components/AnimatedGridBackground";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -42,7 +42,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} relative min-h-screen antialiased`}
       >
-        <TilesBackground />
+        <AnimatedGridBackground />
         <div className="relative z-10 min-h-screen">{children}</div>
       </body>
     </html>

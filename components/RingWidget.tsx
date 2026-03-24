@@ -1,22 +1,34 @@
 type RingWidgetProps = {
   memberId?: string;
+  /**
+   * Full site origin for off-site embeds. Omit on this app to use same-origin `/api/*` links.
+   */
   baseUrl?: string;
 };
 
 export function RingWidget({
   memberId = "YOUR_ID",
-  baseUrl = "https://laurier-webring.vercel.app",
+  baseUrl,
 }: RingWidgetProps) {
+  const root = baseUrl?.replace(/\/$/, "");
+  const prevHref = root
+    ? `${root}/api/prev?from=${encodeURIComponent(memberId)}`
+    : `/api/prev?from=${encodeURIComponent(memberId)}`;
+  const nextHref = root
+    ? `${root}/api/next?from=${encodeURIComponent(memberId)}`
+    : `/api/next?from=${encodeURIComponent(memberId)}`;
+  const homeHref = root ?? "/";
+
   return (
     <nav className="grid w-full max-w-sm grid-cols-3 items-center gap-3 text-base text-gray-600 sm:max-w-md sm:gap-5">
       <a
-        href={`${baseUrl}/api/prev?from=${memberId}`}
+        href={prevHref}
         className="justify-self-start font-medium transition-colors hover:text-gray-900"
       >
         &larr;
       </a>
       <a
-        href={baseUrl}
+        href={homeHref}
         className="flex justify-center"
         aria-label="WLU WebRing home"
       >
@@ -30,7 +42,7 @@ export function RingWidget({
         />
       </a>
       <a
-        href={`${baseUrl}/api/next?from=${memberId}`}
+        href={nextHref}
         className="justify-self-end font-medium transition-colors hover:text-gray-900"
       >
         &rarr;

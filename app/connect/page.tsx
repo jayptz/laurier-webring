@@ -1,25 +1,30 @@
 import { RingWidget } from "../../components/RingWidget";
+import { webringPublicUrl } from "@/lib/webringPublicUrl";
 
-const embedSnippet = `<!-- WLU WebRing Widget -->
+function buildEmbedSnippet(siteUrl: string) {
+  return `<!-- WLU WebRing Widget — points to ${siteUrl} -->
 <div style="display:flex;justify-content:center;padding:16px 0;">
   <nav style="display:inline-flex;align-items:center;gap:16px;border:1px solid #E5E0FF;border-radius:9999px;background:#fff;padding:8px 20px;font-family:system-ui,sans-serif;font-size:14px;box-shadow:0 1px 2px rgba(0,0,0,0.05);">
-    <a href="https://laurier-webring.vercel.app/api/prev?from=YOUR_ID" style="color:#4B2E83;text-decoration:none;font-weight:500;">&larr; Prev</a>
-    <a href="https://laurier-webring.vercel.app" style="display:flex;align-items:center;gap:6px;text-decoration:none;">
-      <img src="https://laurier-webring.vercel.app/wlu-logo.png" alt="WLU" width="24" height="24" style="height:24px;width:24px;">
+    <a href="${siteUrl}/api/prev?from=YOUR_ID" style="color:#4B2E83;text-decoration:none;font-weight:500;">&larr; Prev</a>
+    <a href="${siteUrl}" style="display:flex;align-items:center;gap:6px;text-decoration:none;">
+      <img src="${siteUrl}/wlu-logo.png" alt="WLU" width="24" height="24" style="height:24px;width:24px;">
       <span style="font-weight:600;color:#4B2E83;">WLU</span>
     </a>
-    <a href="https://laurier-webring.vercel.app/api/next?from=YOUR_ID" style="color:#4B2E83;text-decoration:none;font-weight:500;">Next &rarr;</a>
+    <a href="${siteUrl}/api/next?from=YOUR_ID" style="color:#4B2E83;text-decoration:none;font-weight:500;">Next &rarr;</a>
   </nav>
 </div>`;
+}
 
 export default function ConnectPage() {
+  const siteUrl = webringPublicUrl();
+  const embedSnippet = buildEmbedSnippet(siteUrl);
   return (
     <div className="min-h-screen px-6 py-16 sm:px-12 md:px-20 lg:px-32">
       <div className="mx-auto max-w-2xl space-y-12">
         <div>
           <a
             href="/"
-            className="text-sm text-black-700 underline decoration-purple/30 underline-offset-2 hover:decoration-purple"
+            className="text-sm text-gray-700 underline decoration-purple/30 underline-offset-2 hover:decoration-purple"
           >
             &larr; Back to the <a className="text-purple-700">Wing</a>
           </a>
@@ -29,7 +34,12 @@ export default function ConnectPage() {
           <p className="mt-3 text-base leading-relaxed text-gray-600">
             Add the webring widget to your portfolio to link yourself with other
             Laurier CS students. Visitors can navigate between member sites
-            using the &larr; Prev and Next &rarr; buttons.
+            using the &larr; Prev and Next &rarr; buttons. The embed below calls
+            this ring at{" "}
+            <code className="rounded bg-gray-100 px-1.5 py-0.5 text-xs">
+              {siteUrl}
+            </code>
+            .
           </p>
         </div>
 
@@ -39,7 +49,7 @@ export default function ConnectPage() {
             This is what the widget looks like on your site:
           </p>
           <div className="mt-4 flex justify-center rounded-lg border border-gray-100 bg-gray-50 p-8">
-            <RingWidget memberId="your-id" />
+            <RingWidget memberId="your-id" baseUrl={siteUrl} />
           </div>
         </div>
 
@@ -91,7 +101,10 @@ export default function ConnectPage() {
           <p className="mt-2 text-xs text-gray-400">
             Copy and paste this HTML into your site. Replace{" "}
             <code className="text-purple-600">YOUR_ID</code> with your member
-            id from members.json.
+            id from members.json. Use a custom domain by setting{" "}
+            <code className="text-purple-600">NEXT_PUBLIC_WEBRING_URL</code>{" "}
+            when building or deploying this app so the snippet matches your
+            production URL.
           </p>
         </div>
       </div>

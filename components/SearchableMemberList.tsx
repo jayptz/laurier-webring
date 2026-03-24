@@ -2,6 +2,8 @@
 
 import { useState, useCallback, type ReactElement } from "react";
 
+import { memberListTableViewportHeight } from "@/lib/memberListLayout";
+
 type Student = {
   name: string;
   year: string;
@@ -59,16 +61,23 @@ export function SearchableMemberList({
   }, []);
 
   return (
-    <div className="w-full max-w-xl space-y-6">
+    <div className="w-full space-y-6">
       <input
         id="searchInput"
         type="search"
         value={search}
         onChange={handleInput}
-        placeholder="Search names, role, company"
-        className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-base text-gray-800 shadow-sm outline-none transition focus:border-purple focus:ring-1 focus:ring-purple/60"
+        placeholder="roles, names, companies, ..."
+        className="w-full rounded-none border border-gray-200 bg-white px-4 py-3 text-base text-gray-800 shadow-sm outline-none transition focus:border-purple focus:ring-1 focus:ring-purple/60"
       />
-      <div className="overflow-x-auto">
+      <div
+        className="overflow-y-auto overflow-x-auto [scrollbar-gutter:stable]"
+        style={{
+          maxHeight: memberListTableViewportHeight(),
+        }}
+        role="region"
+        aria-label="Member list"
+      >
         <table className="w-full min-w-[400px] text-sm border-collapse table-fixed">
           <colgroup>
             <col style={{ width: "auto" }} />
@@ -76,12 +85,20 @@ export function SearchableMemberList({
             <col style={{ width: "5rem" }} />
             <col style={{ width: "18ch" }} />
           </colgroup>
-          <thead>
-            <tr className="border-b border-purple-500">
-              <th className="pb-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Name</th>
-              <th className="pb-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 w-28">Socials</th>
-              <th className="pb-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 w-20">Year</th>
-              <th className="pb-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 w-[18ch]">Website</th>
+          <thead className="sticky top-0 z-[1] bg-card shadow-[0_1px_0_0_rgb(209_213_219)]">
+            <tr className="border-b border-gray-300">
+              <th className="pb-2 pt-1 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
+                Name
+              </th>
+              <th className="pb-2 pt-1 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 w-28">
+                Socials
+              </th>
+              <th className="pb-2 pt-1 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 w-20">
+                Year
+              </th>
+              <th className="pb-2 pt-1 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 w-[18ch]">
+                Website
+              </th>
             </tr>
           </thead>
           <tbody>

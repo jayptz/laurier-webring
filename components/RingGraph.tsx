@@ -3,6 +3,8 @@
 import { useEffect, useRef } from "react";
 import * as d3 from "d3";
 
+import { memberListTableViewportHeight } from "@/lib/memberListLayout";
+
 type Member = {
   name: string;
   website: string;
@@ -395,10 +397,22 @@ export function RingGraph({ members }: RingGraphProps) {
     };
   }, [members]);
 
+  const count = members.length;
+  const countLabel = `${count} ${count === 1 ? "student" : "Hawks"}`;
+
   return (
-    <div
-      ref={containerRef}
-      className="h-[min(70vh,680px)] min-h-[480px] w-full overflow-hidden rounded-xl border border-purple-200/35 bg-transparent shadow-none ring-1 ring-purple-200/25"
-    />
+    <div className="relative w-full overflow-hidden rounded-xl border border-purple-200/35 bg-transparent shadow-none ring-1 ring-purple-200/25">
+      <div
+        className="pointer-events-none absolute left-3 top-3 z-10 rounded-md border border-purple-200/40 bg-background/90 px-2.5 py-1 text-sm font-medium text-foreground/90 backdrop-blur-sm"
+        aria-live="polite"
+      >
+        {countLabel}
+      </div>
+      <div
+        ref={containerRef}
+        className="w-full overflow-hidden"
+        style={{ height: memberListTableViewportHeight() }}
+      />
+    </div>
   );
 }
