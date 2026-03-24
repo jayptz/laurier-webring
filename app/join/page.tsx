@@ -4,7 +4,7 @@ export default function JoinPage() {
   return (
     <div className="min-h-screen">
       {/* Nav */}
-      <nav className="fixed top-0 z-50 w-full border-b border-gray-200/60 bg-white/80 backdrop-blur-md">
+      <nav className="fixed top-0 z-50 w-full border-b border-border/70 bg-white/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
           <a href="/" className="flex items-center gap-2">
             <Image src="/Old_Waterloo_Lutheran_Golden_Hawks.png" alt="" width={24} height={24} />
@@ -67,7 +67,7 @@ export default function JoinPage() {
           </a>
         </div>
 
-        <div className="rounded-xl border border-gray-200 bg-white p-6">
+        <div className="rounded-xl border border-border bg-white p-6">
           <h2 className="mb-4 text-lg font-semibold text-gray-900">
             After You Apply
           </h2>

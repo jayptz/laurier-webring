@@ -4,7 +4,7 @@ import { webringPublicUrl } from "@/lib/webringPublicUrl";
 function buildEmbedSnippet(siteUrl: string) {
   return `<!-- WLU WebRing Widget — points to ${siteUrl} -->
 <div style="display:flex;justify-content:center;padding:16px 0;">
-  <nav style="display:inline-flex;align-items:center;gap:16px;border:1px solid #E5E0FF;border-radius:9999px;background:#fff;padding:8px 20px;font-family:system-ui,sans-serif;font-size:14px;box-shadow:0 1px 2px rgba(0,0,0,0.05);">
+  <nav style="display:inline-flex;align-items:center;gap:16px;border:1px solid #b39670;border-radius:9999px;background:#fff;padding:8px 20px;font-family:system-ui,sans-serif;font-size:14px;box-shadow:0 1px 2px rgba(0,0,0,0.05);">
     <a href="${siteUrl}/api/prev?from=YOUR_ID" style="color:#4B2E83;text-decoration:none;font-weight:500;">&larr; Prev</a>
     <a href="${siteUrl}" style="display:flex;align-items:center;gap:6px;text-decoration:none;">
       <img src="${siteUrl}/wlu-logo.png" alt="WLU" width="24" height="24" style="height:24px;width:24px;">
@@ -48,7 +48,7 @@ export default function ConnectPage() {
           <p className="mt-1 text-sm text-gray-500">
             This is what the widget looks like on your site:
           </p>
-          <div className="mt-4 flex justify-center rounded-lg border border-gray-100 bg-gray-50 p-8">
+          <div className="mt-4 flex justify-center rounded-lg border border-border bg-card p-8">
             <RingWidget memberId="your-id" baseUrl={siteUrl} />
           </div>
         </div>
@@ -94,7 +94,7 @@ export default function ConnectPage() {
             </h2>
           </div>
           <div className="relative mt-3">
-            <pre className="overflow-x-auto rounded-lg border border-gray-200 bg-gray-50 p-4 text-xs leading-relaxed text-gray-700">
+            <pre className="overflow-x-auto rounded-lg border border-border bg-card p-4 text-xs leading-relaxed text-gray-700">
               <code>{embedSnippet}</code>
             </pre>
           </div>

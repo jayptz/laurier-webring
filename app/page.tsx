@@ -43,69 +43,100 @@ const students = [
 ];
 
 import { RingGraph } from "../components/RingGraph";
-import { RingWidget } from "../components/RingWidget";
 import { SearchableMemberList } from "../components/SearchableMemberList";
+
+/** Shared card chrome (border, padding). */
+const cardSurface =
+  "rounded-none border border-border bg-card p-6 shadow-sm ring-1 ring-purple/10";
+
+/** Logo, graph, welcome, and member list share this column width. */
+const ringColumnFrame = "w-full max-w-2xl shrink-0";
 
 export default function Home() {
   return (
     <div className="min-h-screen px-6 py-16 sm:px-12 md:px-20 lg:px-32">
-      <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
-        <div className="w-full max-w-xl md:max-w-2xl md:ml-0 md:self-start md:shrink-0 space-y-8">
-          <div className="rounded-none border border-border bg-card p-6 shadow-sm ring-1 ring-purple/10">
-            <p className="text-base leading-relaxed text-gray-600">
-              Welcome to the official{" "}
-              <span className="relative inline-block group">
-                <span className="bg-yellow-200 underline decoration-dotted underline-offset-2 cursor-help">
-                  webring
-                </span>
-                <span className="pointer-events-none absolute left-1/2 top-full z-10 mt-2 w-64 -translate-x-1/2 rounded-md bg-gray-900 px-3 py-2 text-xs leading-snug text-white shadow-lg opacity-0 transition-opacity duration-150 group-hover:opacity-100">
-                  A webring (or web ring) is a collection of websites linked
-                  together in a circular structure, usually organized around a
-                  specific theme, and often educational or social.
-                </span>
-              </span>{" "}
-              of students studying CS at{" "}
+      {/*
+        Left: welcome (with Laurier mark) → web graph. Right: member list.
+        Mobile: welcome, graph, then table (column order).
+      */}
+      <div className="flex min-w-0 flex-col gap-8 md:grid md:grid-cols-2 md:items-start md:gap-x-10 md:gap-y-8">
+        <div className="flex min-w-0 max-md:order-1 flex-col gap-8">
+          <div className={`${ringColumnFrame} ${cardSurface}`}>
+            <div className="flex flex-col gap-5">
               <a
                 href="https://www.wlu.ca"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-purple-700 underline decoration-purple/30 underline-offset-2 transition-colors hover:text-purple-dark hover:decoration-purple"
+                className="inline-block max-w-full leading-none"
+                aria-label="Wilfrid Laurier University (opens in a new tab)"
               >
-                WLU
-              </a>{" "}
-              in Ontario, Canada. This is an ongoing project to showcase talent
-              across Laurier. Look through the Hawks and see their work.
-            </p>
-            <p className="mt-6 text-base leading-relaxed text-gray-600">
-              Admission is simple: ship something, then open a{" "}
-              <a
-                href="https://github.com/jayptz/laurier-webring"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-purple-700 underline decoration-purple/30 underline-offset-2 transition-colors hover:text-purple-dark hover:decoration-purple"
-              >
-                PR
+                {/* eslint-disable-next-line @next/next/no-img-element -- static public branding */}
+                <img
+                  src="/WLU.svg"
+                  alt="Wilfrid Laurier University"
+                  width={462}
+                  height={135}
+                  className="block h-[100px] w-auto max-w-full sm:h-[120px]"
+                />
               </a>
-              .
-            </p>
-            <p className="mt-4 text-base leading-relaxed text-gray-600">
-              <a
-                href="/connect"
-                className="text-purple-700 underline decoration-purple/30 underline-offset-2 transition-colors hover:text-purple-dark hover:decoration-purple"
-              >
-                Connect your site &rarr;
-              </a>
-            </p>
+              <div className="min-w-0">
+                <p className="text-base leading-relaxed text-gray-600">
+                  Welcome to the official{" "}
+                  <span className="relative inline-block group">
+                    <span className="bg-yellow-200 underline decoration-dotted underline-offset-2 cursor-help">
+                      webring
+                    </span>
+                    <span className="pointer-events-none absolute left-1/2 top-full z-10 mt-2 w-64 -translate-x-1/2 rounded-md bg-gray-900 px-3 py-2 text-xs leading-snug text-white shadow-lg opacity-0 transition-opacity duration-150 group-hover:opacity-100">
+                      A webring (or web ring) is a collection of websites linked
+                      together in a circular structure, usually organized around a
+                      specific theme, and often educational or social.
+                    </span>
+                  </span>{" "}
+                  of students studying CS at{" "}
+                  <a
+                    href="https://www.wlu.ca"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-purple-700 underline decoration-purple/30 underline-offset-2 transition-colors hover:text-purple-dark hover:decoration-purple"
+                  >
+                    WLU
+                  </a>{" "}
+                  in Ontario, Canada. This is an ongoing project to showcase talent
+                  across Laurier. Look through the Hawks and see their work.
+                </p>
+                <p className="mt-6 text-base leading-relaxed text-gray-600">
+                  Admission is simple: ship something, then open a{" "}
+                  <a
+                    href="https://github.com/jayptz/laurier-webring"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-purple-700 underline decoration-purple/30 underline-offset-2 transition-colors hover:text-purple-dark hover:decoration-purple"
+                  >
+                    PR
+                  </a>
+                  .
+                </p>
+                <p className="mt-4 text-base leading-relaxed text-gray-600">
+                  <a
+                    href="/connect"
+                    className="text-purple-700 underline decoration-purple/30 underline-offset-2 transition-colors hover:text-purple-dark hover:decoration-purple"
+                  >
+                    Connect your site &rarr;
+                  </a>
+                </p>
+              </div>
+            </div>
           </div>
-          <div className="w-full">
+
+          <div className={ringColumnFrame}>
             <RingGraph members={students} />
           </div>
-          <div className="rounded-none border border-gray-200 bg-card p-6 shadow-sm flex justify-center">
-            <RingWidget memberId="priya" />
-          </div>
         </div>
-        <div className="w-full max-w-xl shrink-0 rounded-none border border-border bg-card p-6 shadow-sm ring-1 ring-purple/10">
-          <SearchableMemberList students={students} />
+
+        <div className="flex min-w-0 max-md:order-2 flex-col gap-8">
+          <div className={`${ringColumnFrame} ${cardSurface}`}>
+            <SearchableMemberList students={students} />
+          </div>
         </div>
       </div>
     </div>

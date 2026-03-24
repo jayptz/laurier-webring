@@ -60,6 +60,18 @@ export function SearchableMemberList({
     setSearch(e.target.value);
   }, []);
 
+  const colgroup = (
+    <colgroup>
+      <col style={{ width: "auto" }} />
+      <col style={{ width: "7rem" }} />
+      <col style={{ width: "5rem" }} />
+      <col style={{ width: "18ch" }} />
+    </colgroup>
+  );
+
+  const tableClass =
+    "w-full min-w-[400px] text-sm border-collapse table-fixed";
+
   return (
     <div className="w-full space-y-6">
       <input
@@ -68,91 +80,103 @@ export function SearchableMemberList({
         value={search}
         onChange={handleInput}
         placeholder="roles, names, companies, ..."
-        className="w-full rounded-none border border-gray-200 bg-white px-4 py-3 text-base text-gray-800 shadow-sm outline-none transition focus:border-purple focus:ring-1 focus:ring-purple/60"
+        className="w-full rounded-none border border-border bg-white px-4 py-3 text-base text-gray-800 shadow-sm outline-none transition focus:border-purple focus:ring-1 focus:ring-purple/60"
       />
       <div
-        className="overflow-y-auto overflow-x-auto [scrollbar-gutter:stable]"
-        style={{
-          maxHeight: memberListTableViewportHeight(),
-        }}
-        role="region"
-        aria-label="Member list"
+        className="flex min-h-0 flex-col overflow-hidden"
+        style={{ maxHeight: memberListTableViewportHeight() }}
       >
-        <table className="w-full min-w-[400px] text-sm border-collapse table-fixed">
-          <colgroup>
-            <col style={{ width: "auto" }} />
-            <col style={{ width: "7rem" }} />
-            <col style={{ width: "5rem" }} />
-            <col style={{ width: "18ch" }} />
-          </colgroup>
-          <thead className="sticky top-0 z-[1] bg-card shadow-[0_1px_0_0_rgb(209_213_219)]">
-            <tr className="border-b border-gray-300">
-              <th className="pb-2 pt-1 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
-                Name
-              </th>
-              <th className="pb-2 pt-1 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 w-28">
-                Socials
-              </th>
-              <th className="pb-2 pt-1 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 w-20">
-                Year
-              </th>
-              <th className="pb-2 pt-1 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 w-[18ch]">
-                Website
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.length === 0 ? (
-              <tr>
-                <td colSpan={4} className="pt-4 text-sm text-gray-500">
-                  No members match your search.
-                </td>
-              </tr>
-            ) : (
-              filtered.map((student) => (
-                <tr key={student.name} className="border-b border-purple-500">
-                  <td className="py-4 pr-1 align-top">
-                    <div>
-                      <span className="font-medium text-gray-900" title={student.name}>
-                        {student.name}
-                      </span>
-                      <span className="block text-xs text-gray-600 mt-0.5" title={student.year}>
-                        {student.year}
-                      </span>
-                    </div>
-                  </td>
-                  <td className="py-4 pr-4 align-top">
-                    <div className="flex gap-1 items-center">
-                      {student.socials.map((social) => (
-                        <span
-                          key={social}
-                          className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-purple-50 text-purple-700 hover:bg-purple-100 [&>svg]:block [&>svg]:shrink-0"
-                          aria-label={social}
-                        >
-                          {socialIcons[social]}
-                        </span>
-                      ))}
-                    </div>
-                  </td>
-                  <td className="py-4 pr-4 align-top text-gray-600">
-                    {student.gradYear ?? "2027"}
-                  </td>
-                  <td className="py-4 align-top">
-                    <a
-                      href={student.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-yellow-600 underline decoration-yellow-500/50 underline-offset-2 hover:text-yellow-700 font-mono"
-                      title={student.website}
-                    >
-                      {truncate(student.website.replace(/^https?:\/\//, "").replace(/\/$/, ""), 15)}
-                    </a>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+        <div className="flex min-h-0 flex-1 flex-col overflow-x-auto">
+          {/* Same inset + direction as the body scroller so header columns line up with rows */}
+          <div className="shrink-0 pl-5 [direction:rtl] [scrollbar-gutter:stable]">
+            <div className="[direction:ltr] min-w-0">
+              <table className={tableClass}>
+                {colgroup}
+                <thead className="bg-card">
+                  <tr className="border-b border-border">
+                    <th className="pb-2 pt-1 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
+                      Name
+                    </th>
+                    <th className="pb-2 pt-1 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 w-28">
+                      Socials
+                    </th>
+                    <th className="pb-2 pt-1 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 w-20">
+                      Year
+                    </th>
+                    <th className="pb-2 pt-1 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 w-[18ch]">
+                      Website
+                    </th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+          </div>
+          <div
+            className="min-h-0 flex-1 overflow-y-auto pl-5 [direction:rtl] [scrollbar-gutter:stable]"
+            role="region"
+            aria-label="Member list"
+          >
+            <div className="[direction:ltr] min-w-0">
+              <table className={tableClass}>
+                {colgroup}
+                <tbody>
+                  {filtered.length === 0 ? (
+                    <tr>
+                      <td colSpan={4} className="pt-4 text-sm text-gray-500">
+                        No members match your search.
+                      </td>
+                    </tr>
+                  ) : (
+                    filtered.map((student) => (
+                      <tr key={student.name} className="border-b border-purple-500">
+                        <td className="py-4 pr-1 align-top">
+                          <div>
+                            <span className="font-medium text-gray-900" title={student.name}>
+                              {student.name}
+                            </span>
+                            <span className="block text-xs text-gray-600 mt-0.5" title={student.year}>
+                              {student.year}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="py-4 pr-4 align-top">
+                          <div className="flex gap-1 items-center">
+                            {student.socials.map((social) => (
+                              <span
+                                key={social}
+                                className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-purple-50 text-purple-700 hover:bg-purple-100 [&>svg]:block [&>svg]:shrink-0"
+                                aria-label={social}
+                              >
+                                {socialIcons[social]}
+                              </span>
+                            ))}
+                          </div>
+                        </td>
+                        <td className="py-4 pr-4 align-top text-gray-600">
+                          {student.gradYear ?? "2027"}
+                        </td>
+                        <td className="py-4 align-top">
+                          <a
+                            href={student.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-yellow-600 underline decoration-yellow-500/50 underline-offset-2 hover:text-yellow-700 font-mono"
+                            title={student.website}
+                          >
+                            {truncate(
+                              student.website.replace(/^https?:\/\//, "").replace(/\/$/, ""),
+                              15,
+                            )}
+                          </a>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -145,7 +145,7 @@ export function RingGraph({ members }: RingGraphProps) {
         .style("background", "#fff")
         .style("color", "#1f2937")
         .style("padding", "10px 14px")
-        .style("border", "1px solid #E5E0FF")
+        .style("border", "1px solid #b39670")
         .style("border-radius", "8px")
         .style("font-family", "system-ui, sans-serif")
         .style("font-size", "12px")
@@ -401,9 +401,9 @@ export function RingGraph({ members }: RingGraphProps) {
   const countLabel = `${count} ${count === 1 ? "student" : "Hawks"}`;
 
   return (
-    <div className="relative w-full overflow-hidden rounded-xl border border-purple-200/35 bg-transparent shadow-none ring-1 ring-purple-200/25">
+    <div className="relative w-full overflow-hidden rounded-none border border-border bg-background shadow-none">
       <div
-        className="pointer-events-none absolute left-3 top-3 z-10 rounded-md border border-purple-200/40 bg-background/90 px-2.5 py-1 text-sm font-medium text-foreground/90 backdrop-blur-sm"
+        className="pointer-events-none absolute left-3 top-3 z-10 rounded-md border border-border bg-background/90 px-2.5 py-1 text-sm font-medium text-foreground/90 backdrop-blur-sm"
         aria-live="polite"
       >
         {countLabel}
