@@ -42,15 +42,17 @@ const students = [
   { name: "David Turner", year: "Security @ Deloitte", gradYear: "2027", website: "https://davidturner.io", socials: ["GitHub"] },
 ];
 
+import { WEBRING_HUB_FROM } from "@/lib/webringHubFrom";
 import { RingGraph } from "../components/RingGraph";
+import { RingWidget } from "../components/RingWidget";
 import { SearchableMemberList } from "../components/SearchableMemberList";
 
-/** Shared card chrome (border, padding). */
+/** Shared card chrome (border, padding) — tighter on very small screens. */
 const cardSurface =
-  "rounded-none border border-border bg-card p-6 shadow-sm ring-1 ring-purple/10";
+  "rounded-none border border-border bg-card p-4 shadow-sm ring-1 ring-purple/10 sm:p-6";
 
-/** Logo, graph, welcome, and member list share this column width. */
-const ringColumnFrame = "w-full max-w-2xl shrink-0";
+/** Full-width in column; min-w-0 prevents grid/flex overflow on narrow viewports. */
+const ringColumnFrame = "w-full min-w-0 max-w-2xl shrink-0";
 
 export default function Home() {
   return (
@@ -59,24 +61,24 @@ export default function Home() {
         Left: welcome (with Laurier mark) → web graph. Right: member list.
         Mobile: welcome, graph, then table (column order).
       */}
-      <div className="flex min-w-0 flex-col gap-8 md:grid md:grid-cols-2 md:items-start md:gap-x-10 md:gap-y-8">
+      <div className="mx-auto flex min-w-0 max-w-[1600px] flex-col gap-[clamp(1.25rem,4vw,2rem)] md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-start md:gap-x-[clamp(1.5rem,4vw,2.5rem)] md:gap-y-8">
         <div className="flex min-w-0 max-md:order-1 flex-col gap-8">
           <div className={`${ringColumnFrame} ${cardSurface}`}>
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-3">
               <a
                 href="https://www.wlu.ca"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block max-w-full leading-none"
+                className="block max-w-full leading-none"
                 aria-label="Wilfrid Laurier University (opens in a new tab)"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element -- static public branding */}
                 <img
-                  src="/WLU.svg"
+                  src="/Wilfrid-Laurier-University-logo-removebg-preview.png"
                   alt="Wilfrid Laurier University"
-                  width={462}
-                  height={135}
-                  className="block h-[100px] w-auto max-w-full sm:h-[120px]"
+                  width={908}
+                  height={275}
+                  className="block h-[clamp(4rem,12vw,7rem)] w-auto max-w-full"
                 />
               </a>
               <div className="min-w-0">
@@ -128,7 +130,9 @@ export default function Home() {
             </div>
           </div>
 
-          <div className={`${ringColumnFrame} min-w-0 overflow-hidden`}>
+          <div
+            className={`${ringColumnFrame} min-w-0 overflow-hidden touch-manipulation`}
+          >
             <RingGraph members={students} />
           </div>
         </div>
@@ -137,6 +141,15 @@ export default function Home() {
           <div className={`${ringColumnFrame} ${cardSurface}`}>
             <SearchableMemberList students={students} />
           </div>
+        </div>
+      </div>
+
+      <div className="mx-auto mt-[clamp(2rem,6vw,3.5rem)] flex w-full max-w-[1600px] justify-center border-t border-border pt-10 pb-8">
+        <div className="rounded-none border border-border bg-card px-6 py-4 shadow-sm ring-1 ring-purple/10 sm:px-8">
+          <p className="mb-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500">
+            Visit member sites
+          </p>
+          <RingWidget memberId={WEBRING_HUB_FROM} />
         </div>
       </div>
     </div>

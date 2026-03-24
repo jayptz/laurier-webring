@@ -2,7 +2,10 @@
 
 import { useState, useCallback, type ReactElement } from "react";
 
-import { memberListTableViewportHeight } from "@/lib/memberListLayout";
+import {
+  memberListMobileMaxHeight,
+  memberListTableViewportHeight,
+} from "@/lib/memberListLayout";
 
 type Student = {
   name: string;
@@ -70,20 +73,65 @@ export function SearchableMemberList({
   );
 
   const tableClass =
-    "w-full min-w-[400px] text-sm border-collapse table-fixed";
+    "w-full min-w-0 text-sm border-collapse table-fixed md:min-w-[520px]";
 
   return (
-    <div className="w-full space-y-6">
+    <div className="w-full space-y-4 sm:space-y-6">
       <input
         id="searchInput"
         type="search"
         value={search}
         onChange={handleInput}
         placeholder="roles, names, companies, ..."
-        className="w-full rounded-none border border-border bg-white px-4 py-3 text-base text-gray-800 shadow-sm outline-none transition focus:border-purple focus:ring-1 focus:ring-purple/60"
+        className="min-h-11 w-full rounded-none border border-border bg-white px-4 py-3 text-base text-gray-800 shadow-sm outline-none transition focus:border-purple focus:ring-1 focus:ring-purple/60"
       />
+
+      {/* Narrow viewports: stacked cards, no horizontal table scroll */}
       <div
-        className="flex min-h-0 flex-col overflow-hidden"
+        className="md:hidden overflow-y-auto overscroll-y-contain [-webkit-overflow-scrolling:touch]"
+        style={{ maxHeight: memberListMobileMaxHeight() }}
+      >
+        {filtered.length === 0 ? (
+          <p className="text-sm text-gray-500">No members match your search.</p>
+        ) : (
+          <ul className="flex flex-col gap-4">
+            {filtered.map((student) => (
+              <li
+                key={student.name}
+                className="border-b border-purple-500/50 pb-4 last:border-b-0"
+              >
+                <div className="font-medium text-gray-900">{student.name}</div>
+                <div className="mt-0.5 text-xs text-gray-600">{student.year}</div>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {student.socials.map((social) => (
+                    <span
+                      key={social}
+                      className="grid h-11 min-h-11 w-11 min-w-11 shrink-0 place-items-center rounded-full bg-purple-50 text-purple-700 [&>svg]:block [&>svg]:h-5 [&>svg]:w-5"
+                      aria-label={social}
+                    >
+                      {socialIcons[social]}
+                    </span>
+                  ))}
+                </div>
+                <div className="mt-2 text-sm text-gray-600">
+                  Class of {student.gradYear ?? "2027"}
+                </div>
+                <a
+                  href={student.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 block break-all text-sm font-mono text-yellow-600 underline decoration-yellow-500/50 underline-offset-2"
+                >
+                  {student.website.replace(/^https?:\/\//, "").replace(/\/$/, "")}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      <div
+        className="hidden min-h-0 flex-col overflow-hidden md:flex"
         style={{ maxHeight: memberListTableViewportHeight() }}
       >
         <div className="flex min-h-0 flex-1 flex-col overflow-x-auto">
