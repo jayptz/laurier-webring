@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { AnimatedGridBackground } from "../components/AnimatedGridBackground";
 import "./globals.css";
 
@@ -44,6 +45,7 @@ export default function RootLayout({
       >
         <AnimatedGridBackground />
         <div className="relative z-10 min-h-screen">{children}</div>
+        <Analytics />
       </body>
     </html>
   );
