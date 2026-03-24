@@ -73,9 +73,9 @@ export function RingGraph({ members }: RingGraphProps) {
       .attr("width", "100%")
       .attr("height", "100%")
       .attr("viewBox", `0 0 ${width} ${height}`)
-      .attr("overflow", "visible")
+      .attr("overflow", "hidden")
       .style("cursor", "move")
-      .style("overflow", "visible");
+      .style("overflow", "hidden");
 
     const g = svg.append("g");
 
