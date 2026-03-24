@@ -42,7 +42,9 @@ const students = [
   { name: "David Turner", year: "Security @ Deloitte", gradYear: "2027", website: "https://davidturner.io", socials: ["GitHub"] },
 ];
 
+import { WEBRING_HUB_FROM } from "@/lib/webringHubFrom";
 import { RingGraph } from "../components/RingGraph";
+import { RingWidget } from "../components/RingWidget";
 import { SearchableMemberList } from "../components/SearchableMemberList";
 
 /** Shared card chrome (border, padding) — tighter on very small screens. */
@@ -139,6 +141,15 @@ export default function Home() {
           <div className={`${ringColumnFrame} ${cardSurface}`}>
             <SearchableMemberList students={students} />
           </div>
+        </div>
+      </div>
+
+      <div className="mx-auto mt-[clamp(2rem,6vw,3.5rem)] flex w-full max-w-[1600px] justify-center border-t border-border pt-10 pb-8">
+        <div className="rounded-none border border-border bg-card px-6 py-4 shadow-sm ring-1 ring-purple/10 sm:px-8">
+          <p className="mb-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500">
+            Visit member sites
+          </p>
+          <RingWidget memberId={WEBRING_HUB_FROM} />
         </div>
       </div>
     </div>
