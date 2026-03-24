@@ -1,16 +1,23 @@
 export const MEMBER_LIST_ROW_SLOT_REM = 5.75;
 
-/** Student table scroll area. */
+/** Student table scroll area (desktop). Capped with dvh for short viewports / mobile browser chrome. */
 const MEMBER_LIST_HEADER_REM = 1.9;
 const MEMBER_LIST_VISIBLE_ROW_SLOTS = 10;
 
 export function memberListTableViewportHeight(): string {
-  return `calc(${MEMBER_LIST_HEADER_REM}rem + ${MEMBER_LIST_VISIBLE_ROW_SLOTS} * ${MEMBER_LIST_ROW_SLOT_REM}rem)`;
+  const content = `calc(${MEMBER_LIST_HEADER_REM}rem + ${MEMBER_LIST_VISIBLE_ROW_SLOTS} * ${MEMBER_LIST_ROW_SLOT_REM}rem)`;
+  return `min(${content}, min(90dvh, 92vh))`;
 }
 
-/** Ring graph — shorter, fixed at 10 row slots capped by viewport. */
+/** Stacked member cards on small screens — scrolls inside a bounded area. */
+export function memberListMobileMaxHeight(): string {
+  return "min(78dvh, 36rem)";
+}
+
+/** Ring graph — row-based size, never taller than most viewports. */
 const RING_GRAPH_ROW_SLOTS = 10;
 
 export function ringGraphHeight(): string {
-  return `min(calc(${RING_GRAPH_ROW_SLOTS} * ${MEMBER_LIST_ROW_SLOT_REM}rem), 70vh)`;
+  const content = `calc(${RING_GRAPH_ROW_SLOTS} * ${MEMBER_LIST_ROW_SLOT_REM}rem)`;
+  return `min(${content}, min(62dvh, 70vh))`;
 }

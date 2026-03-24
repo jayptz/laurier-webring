@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Public raster images (large / many — keep locally; deploy still needs the exceptions below)
+/public/**/*.png
+/public/**/*.jpg
+/public/**/*.jpeg
+/public/**/*.webp
+/public/**/*.gif
+!/public/Old_Waterloo_Lutheran_Golden_Hawks.png
+!/public/wlu-logo.png
+!/public/Wilfrid-Laurier-University-logo-removebg-preview.png
