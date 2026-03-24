@@ -59,7 +59,7 @@ export default function Home() {
         Left: welcome (with Laurier mark) → web graph. Right: member list.
         Mobile: welcome, graph, then table (column order).
       */}
-      <div className="flex min-w-0 flex-col gap-8 md:grid md:grid-cols-2 md:items-start md:gap-x-10 md:gap-y-8">
+      <div className="flex min-w-0 flex-col gap-8 md:grid md:grid-cols-2 md:items-stretch md:gap-x-10 md:gap-y-8">
         <div className="flex min-w-0 max-md:order-1 flex-col gap-8">
           <div className={`${ringColumnFrame} ${cardSurface}`}>
             <div className="flex flex-col gap-5">
@@ -128,13 +128,13 @@ export default function Home() {
             </div>
           </div>
 
-          <div className={ringColumnFrame}>
+          <div className={`${ringColumnFrame} min-w-0 overflow-hidden`}>
             <RingGraph members={students} />
           </div>
         </div>
 
-        <div className="flex min-w-0 max-md:order-2 flex-col gap-8">
-          <div className={`${ringColumnFrame} ${cardSurface}`}>
+        <div className="relative z-10 flex min-w-0 max-md:order-2 flex-col gap-8">
+          <div className={`flex min-h-0 flex-1 flex-col ${ringColumnFrame} ${cardSurface}`}>
             <SearchableMemberList students={students} />
           </div>
         </div>
