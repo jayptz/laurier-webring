@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { TilesBackground } from "../components/TilesBackground";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -39,9 +40,10 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} relative min-h-screen antialiased`}
       >
-        {children}
+        <TilesBackground />
+        <div className="relative z-10 min-h-screen">{children}</div>
       </body>
     </html>
   );

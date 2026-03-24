@@ -35,8 +35,8 @@ export function RingGraph({ members }: RingGraphProps) {
     // clear any previous render
     while (container.firstChild) container.removeChild(container.firstChild);
 
-    const width = container.clientWidth || 360;
-    const height = container.clientHeight || 360;
+    const width = container.clientWidth || 560;
+    const height = container.clientHeight || 520;
 
     const nodeRadius = 8;
     const defaultNodeColor = "#FFD54F"; // Laurier gold
@@ -57,20 +57,30 @@ export function RingGraph({ members }: RingGraphProps) {
       target: sites[(index + 1) % sites.length].id,
     }));
 
+    const pad = nodeRadius * 5;
+    const rw = Math.max(width - 2 * pad, 1);
+    const rh = Math.max(height - 2 * pad, 1);
+    sites.forEach((d) => {
+      d.x = pad + Math.random() * rw;
+      d.y = pad + Math.random() * rh;
+    });
+
     const svg = d3
       .select(container)
       .append("svg")
       .attr("width", "100%")
       .attr("height", "100%")
       .attr("viewBox", `0 0 ${width} ${height}`)
-      .style("cursor", "move");
+      .attr("overflow", "visible")
+      .style("cursor", "move")
+      .style("overflow", "visible");
 
     const g = svg.append("g");
 
     // zoom + pan
     const zoom = d3
       .zoom<SVGSVGElement, unknown>()
-      .scaleExtent([0.1, 4])
+      .scaleExtent([0.015, 80])
       .on("zoom", (event) => {
         g.attr("transform", event.transform);
       });
@@ -85,13 +95,11 @@ export function RingGraph({ members }: RingGraphProps) {
         d3
           .forceLink<SimNode, SimLink>()
           .id((d) => d.id)
-          .distance(100)
+          .distance(200)
       )
-      .force("charge", d3.forceManyBody().strength(-100))
-      .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collision", d3.forceCollide().radius(nodeRadius * 2))
-      .alphaDecay(0.02)
-      .velocityDecay(0.4);
+      .force("charge", d3.forceManyBody().strength(-420))
+      .alphaDecay(0.015)
+      .velocityDecay(0.35);
 
     // edges
     const link = g
@@ -231,7 +239,7 @@ export function RingGraph({ members }: RingGraphProps) {
         maxY = Math.max(maxY, d.y!);
       });
 
-      const padding = 50;
+      const padding = 48;
       minX -= padding;
       minY -= padding;
       maxX += padding;
@@ -240,8 +248,10 @@ export function RingGraph({ members }: RingGraphProps) {
       const w = container.clientWidth || width;
       const h = container.clientHeight || height;
 
-      const scale =
-        Math.min(w / (maxX - minX), h / (maxY - minY)) * 1.4;
+      const bw = Math.max(maxX - minX, 1e-6);
+      const bh = Math.max(maxY - minY, 1e-6);
+      // Zoom out more than a tight fit so the graph can extend beyond the first view (pan / zoom freely)
+      const scale = Math.min(w / bw, h / bh) * 0.72;
       const centerX = (minX + maxX) / 2;
       const centerY = (minY + maxY) / 2;
 
@@ -327,8 +337,11 @@ export function RingGraph({ members }: RingGraphProps) {
           maxX += padding;
           maxY += padding;
 
-          const scale =
-            Math.min(width / (maxX - minX), height / (maxY - minY)) * 0.9;
+          const cw = container.clientWidth || width;
+          const ch = container.clientHeight || height;
+          const mw = Math.max(maxX - minX, 1e-6);
+          const mh = Math.max(maxY - minY, 1e-6);
+          const scale = Math.min(cw / mw, ch / mh) * 0.85;
           const centerX = (minX + maxX) / 2;
           const centerY = (minY + maxY) / 2;
 
@@ -338,7 +351,7 @@ export function RingGraph({ members }: RingGraphProps) {
             .call(
               zoom.transform,
               d3.zoomIdentity
-                .translate(width / 2, height / 2)
+                .translate(cw / 2, ch / 2)
                 .scale(scale)
                 .translate(-centerX, -centerY)
             );
@@ -371,8 +384,7 @@ export function RingGraph({ members }: RingGraphProps) {
       const newWidth = container.clientWidth || width;
       const newHeight = container.clientHeight || height;
       svg.attr("viewBox", `0 0 ${newWidth} ${newHeight}`);
-      simulation.force("center", d3.forceCenter(newWidth / 2, newHeight / 2));
-      simulation.alpha(0.3).restart();
+      simulation.alpha(0.2).restart();
     };
     window.addEventListener("resize", handleResize);
 
@@ -386,7 +398,7 @@ export function RingGraph({ members }: RingGraphProps) {
   return (
     <div
       ref={containerRef}
-      className="h-[360px] w-full rounded-xl border border-purple-100"
+      className="h-[min(70vh,680px)] min-h-[480px] w-full overflow-hidden rounded-xl border border-purple-200/35 bg-transparent shadow-none ring-1 ring-purple-200/25"
     />
   );
 }

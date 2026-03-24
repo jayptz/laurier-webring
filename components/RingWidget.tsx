@@ -8,32 +8,32 @@ export function RingWidget({
   baseUrl = "https://laurier-webring.vercel.app",
 }: RingWidgetProps) {
   return (
-    <nav className="inline-flex items-center gap-4 text-sm text-gray-600">
+    <nav className="grid w-full max-w-sm grid-cols-3 items-center gap-3 text-base text-gray-600 sm:max-w-md sm:gap-5">
       <a
         href={`${baseUrl}/api/prev?from=${memberId}`}
-        className="font-medium transition-colors hover:text-gray-900"
+        className="justify-self-start font-medium transition-colors hover:text-gray-900"
       >
-        &larr; 
+        &larr;
       </a>
       <a
         href={baseUrl}
-        className="flex items-center gap-1.5 -ml-1"
+        className="flex justify-center"
+        aria-label="WLU WebRing home"
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/laurier-goldenhawk.svg"
           alt="Golden Hawk"
-          width={24}
-          height={24}
-          className="h-6 w-6 grayscale"
+          width={32}
+          height={32}
+          className="h-8 w-8 grayscale"
         />
-        <span className="font-semibold text-gray-800"></span>
       </a>
       <a
         href={`${baseUrl}/api/next?from=${memberId}`}
-        className="font-medium transition-colors hover:text-gray-900"
+        className="justify-self-end font-medium transition-colors hover:text-gray-900"
       >
-         &rarr;
+        &rarr;
       </a>
     </nav>
   );
