@@ -1,23 +1,32 @@
-# WLU WebRing
+# 𓅃 WLU WebRing
 
-A webring of Laurier CS student portfolios. Discover projects, meet builders.
+<img width="1048" height="416" alt="WLU WebRing Banner" src="https://github.com/user-attachments/assets/cde74cf8-c9dd-4c6e-af96-674faabe89e9" />
 
-## Getting Started
+A community-driven webring for **Wilfrid Laurier University CS students and alumni** to showcase their portfolios and connect with each other.
+
+---
+
+##  Getting Started
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see the site.
+Then open:  
+https://laurier.network/
 
-## Connect Your Site
+---
 
-Want to join the ring? Visit [/connect](http://localhost:3000/connect) for instructions.
+## 🔗 Join the WebRing
 
-### Quick steps
+Want to be part of it? Head over to:  
+ https://laurier.network/connect
 
-1. Fork this repo and add yourself to `data/members.json`:
+### Quick Steps
+
+1. **Fork this repo**
+2. Add yourself to `data/members.json`:
 
 ```json
 {
@@ -33,14 +42,19 @@ Want to join the ring? Visit [/connect](http://localhost:3000/connect) for instr
 }
 ```
 
-2. Open a pull request
-3. Once merged, add the webring widget to your site's footer:
+3. Open a **pull request**
+4. Once merged, add the **webring widget** to your site
 
-```react/jsx
-<!-- WLU WebRing Widget (React/JSX) — points to https://laurier.network -->
+---
+
+##  WebRing Widget
+
+Add this to your site's footer:
+
+```jsx
 import React from "react";
 
-const WEBRING_URL = "https://laurier.network"; // e.g. https://laurier.network
+const WEBRING_URL = "https://laurier.network";
 
 export function WluWebRingWidget({ memberId = "YOUR_ID" }) {
   const prevHref = `${WEBRING_URL}/api/prev?from=${encodeURIComponent(memberId)}`;
@@ -95,19 +109,52 @@ export function WluWebRingWidget({ memberId = "YOUR_ID" }) {
 }
 ```
 
-Replace `YOUR_ID` with your member id from `members.json`.
+ Replace `"YOUR_ID"` with your ID from `members.json`.
+
+---
+
+## Customizing the Widget
+
+The default widget (shown on the connect page):
+
+<img width="681" height="111" alt="Default Widget" src="https://github.com/user-attachments/assets/ff22fffb-9c0f-4e7e-8be0-67b15c19392a" />
+
+You can fully customize it to match your site’s design.
+
+Example customization (from https://www.jayptz.me/):
+
+<img width="686" height="97" alt="Custom Widget" src="https://github.com/user-attachments/assets/8e22e3f9-4c6d-4759-8050-26a7ef22a129" />
+
+---
 
 ## API Routes
 
 | Route | Description |
-|---|---|
+|------|------------|
 | `GET /api/members` | Returns the full member list |
 | `GET /api/next?from=<id>` | Redirects to the next member (wraps around) |
 | `GET /api/prev?from=<id>` | Redirects to the previous member (wraps around) |
 | `GET /api/random` | Redirects to a random member |
 
-## Tech Stack
+---
 
-- [Next.js](https://nextjs.org) (App Router)
-- [Tailwind CSS](https://tailwindcss.com)
-- [D3.js](https://d3js.org) (force-directed graph)
+##  Tech Stack
+
+- **Next.js** (App Router)  
+- **Tailwind CSS**  
+- **D3.js** (force-directed graph)
+
+---
+
+
+##  Support
+
+If you like this project:
+
+- ⭐ Star the repo  
+-  hare it with other Laurier devs  
+-  Add your portfolio  
+
+---
+
+If you're one of us, we welcome you with open arms (or in this case, open PRs).
