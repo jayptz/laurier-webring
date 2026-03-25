@@ -36,18 +36,63 @@ Want to join the ring? Visit [/connect](http://localhost:3000/connect) for instr
 2. Open a pull request
 3. Once merged, add the webring widget to your site's footer:
 
-```html
-<!-- WLU WebRing Widget -->
-<div style="display:flex;justify-content:center;padding:16px 0;">
-  <nav style="display:inline-flex;align-items:center;gap:16px;border:1px solid #E5E0FF;border-radius:9999px;background:#fff;padding:8px 20px;font-family:system-ui,sans-serif;font-size:14px;">
-    <a href="https://laurier-webring.vercel.app/api/prev?from=YOUR_ID" style="color:#4B2E83;text-decoration:none;font-weight:500;">&larr; Prev</a>
-    <a href="https://laurier-webring.vercel.app" style="display:flex;align-items:center;gap:6px;text-decoration:none;">
-      <img src="https://laurier-webring.vercel.app/wlu-logo.png" alt="WLU" width="24" height="24">
-      <span style="font-weight:600;color:#4B2E83;">WLU</span>
-    </a>
-    <a href="https://laurier-webring.vercel.app/api/next?from=YOUR_ID" style="color:#4B2E83;text-decoration:none;font-weight:500;">Next &rarr;</a>
-  </nav>
-</div>
+```react/jsx
+<!-- WLU WebRing Widget (React/JSX) — points to https://laurier.network -->
+import React from "react";
+
+const WEBRING_URL = "https://laurier.network"; // e.g. https://laurier.network
+
+export function WluWebRingWidget({ memberId = "YOUR_ID" }) {
+  const prevHref = `${WEBRING_URL}/api/prev?from=${encodeURIComponent(memberId)}`;
+  const nextHref = `${WEBRING_URL}/api/next?from=${encodeURIComponent(memberId)}`;
+
+  return (
+    <div style={{ display: "flex", justifyContent: "center", padding: "16px 0" }}>
+      <nav
+        style={{
+          display: "grid",
+          width: "100%",
+          maxWidth: 448,
+          gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+          alignItems: "center",
+          gap: 12,
+          color: "#6B7280",
+          fontSize: 16,
+        }}
+      >
+        <a
+          href={prevHref}
+          style={{ justifySelf: "start", fontWeight: 500, textDecoration: "none", color: "#6B7280" }}
+          aria-label="Previous member"
+        >
+          ←
+        </a>
+
+        <a
+          href={WEBRING_URL}
+          style={{ display: "flex", justifyContent: "center", textDecoration: "none" }}
+          aria-label="WLU WebRing home"
+        >
+          <img
+            src={`${WEBRING_URL}/laurier-goldenhawk.svg`}
+            alt="Golden Hawk"
+            width={32}
+            height={32}
+            style={{ height: 32, width: 32, filter: "grayscale(100%)" }}
+          />
+        </a>
+
+        <a
+          href={nextHref}
+          style={{ justifySelf: "end", fontWeight: 500, textDecoration: "none", color: "#6B7280" }}
+          aria-label="Next member"
+        >
+          →
+        </a>
+      </nav>
+    </div>
+  );
+}
 ```
 
 Replace `YOUR_ID` with your member id from `members.json`.
