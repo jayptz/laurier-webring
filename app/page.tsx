@@ -42,10 +42,43 @@ const students = [
   { name: "David Turner", year: "Security @ Deloitte", gradYear: "2027", website: "https://davidturner.io", socials: ["GitHub"] },
 ];
 
+import members from "@/data/members.json";
 import { WEBRING_HUB_FROM } from "@/lib/webringHubFrom";
 import { RingGraph } from "../components/RingGraph";
 import { RingWidget } from "../components/RingWidget";
 import { SearchableMemberList } from "../components/SearchableMemberList";
+
+const studentsFromMembersJson = members.map((m: any) => {
+  const asUrlOrEmpty = (v: unknown): string => {
+    if (typeof v !== "string") return "";
+    const s = v.trim();
+    // Expect full URLs so the icons can be clickable.
+    return /^https?:\/\//i.test(s) ? s : "";
+  };
+
+  const socials: { kind: "GitHub" | "LinkedIn" | "Twitter"; url: string }[] =
+    [];
+
+  const githubUrl = asUrlOrEmpty(m.Github ?? m.github ?? m.GitHub);
+  if (githubUrl) socials.push({ kind: "GitHub", url: githubUrl });
+
+  const linkedinUrl = asUrlOrEmpty(m.Linkedin ?? m.linkedin ?? m.LinkedIn);
+  if (linkedinUrl) socials.push({ kind: "LinkedIn", url: linkedinUrl });
+
+  // JSON uses `X` but the icon key is `Twitter`.
+  const xUrl = asUrlOrEmpty(m.X ?? m.Twitter ?? m.twitter);
+  if (xUrl) socials.push({ kind: "Twitter", url: xUrl });
+
+  return {
+    name: m.name as string,
+    year: (m.Role ?? m.role ?? "") as string,
+    gradYear: (m.Year ?? m.GradYear ?? m.gradYear ?? undefined) as
+      | string
+      | undefined,
+    website: m.url as string,
+    socials,
+  };
+});
 
 /** Shared card chrome (border, padding) — tighter on very small screens. */
 const cardSurface =
@@ -85,10 +118,14 @@ export default function Home() {
                 <p className="text-base leading-relaxed text-gray-600">
                   Welcome to the official{" "}
                   <span className="relative inline-block group">
-                    <span className="bg-yellow-200 underline decoration-dotted underline-offset-2 cursor-help">
+                    <button
+                      type="button"
+                      className="cursor-help bg-yellow-200 underline decoration-dotted underline-offset-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-purple/60"
+                      aria-label="What is a webring?"
+                    >
                       webring
-                    </span>
-                    <span className="pointer-events-none absolute left-1/2 top-full z-10 mt-2 w-64 -translate-x-1/2 rounded-md bg-gray-900 px-3 py-2 text-xs leading-snug text-white shadow-lg opacity-0 transition-opacity duration-150 group-hover:opacity-100">
+                    </button>
+                    <span className="pointer-events-none absolute left-1/2 top-full z-10 mt-2 w-64 -translate-x-1/2 rounded-md border border-border bg-background/95 px-3 py-2 text-xs leading-snug text-foreground shadow-lg opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-within:opacity-100 group-active:opacity-100">
                       A webring (or web ring) is a collection of websites linked
                       together in a circular structure, usually organized around a
                       specific theme, and often educational or social.
@@ -130,16 +167,30 @@ export default function Home() {
             </div>
           </div>
 
-          <div
-            className={`${ringColumnFrame} min-w-0 overflow-hidden touch-manipulation`}
-          >
-            <RingGraph members={students} />
+          <div className="flex flex-col">
+            <div
+              className={`${ringColumnFrame} min-w-0 overflow-hidden touch-manipulation`}
+            >
+              <RingGraph members={studentsFromMembersJson} />
+            </div>
+
+            <p className="mt-0 self-start text-left text-[11px] text-gray-600">
+              Inspired by{" "}
+              <a
+                href="https://www.linkedin.com/in/jusgu"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-purple-700 underline decoration-purple/30 underline-offset-2 transition-colors hover:text-purple-dark hover:decoration-purple"
+              >
+                @Justin (JusGu)
+              </a>
+            </p>
           </div>
         </div>
 
         <div className="relative z-10 flex min-w-0 max-md:order-2 flex-col gap-8">
           <div className={`${ringColumnFrame} ${cardSurface}`}>
-            <SearchableMemberList students={students} />
+            <SearchableMemberList students={studentsFromMembersJson} />
           </div>
         </div>
       </div>
@@ -147,7 +198,8 @@ export default function Home() {
       <div className="mx-auto mt-[clamp(2rem,6vw,3.5rem)] flex w-full max-w-[1600px] justify-center border-t border-border pt-10 pb-8">
         <div className="rounded-none border border-border bg-card px-6 py-4 shadow-sm ring-1 ring-purple/10 sm:px-8">
           <p className="mb-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500">
-            Visit member sites
+            Visit{" "}
+            <span className="text-yellow-500">Hawks</span> Sites
           </p>
           <RingWidget memberId={WEBRING_HUB_FROM} />
         </div>

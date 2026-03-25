@@ -4,20 +4,43 @@
     "name": "Jay Patel",
     "url": "https://jayptz.me",
     "tags": ["SWE", "Full-Stack"],
-    "blurb": "Software developer at RBC and Laurier CS student building tools for the community."
+    "Role": "Software Developer @ RBC",
+    "Year": "2027",
+    "Github": "https://github.com/jayptz",
+    "Linkedin": "https://www.linkedin.com/in/jay-patel-wlu/",
+    "X": "https://x.com/jayptz0"
   },
   {
     "id": "grishma",
     "name": "Grishma Gosain",
     "url": "https://grishmagosainuxporfolio.framer.website/",
     "tags": ["Product", "UX"],
-    "blurb": "Product analyst at RBC; UX and product-minded builder at Laurier."
+    "Role": "Product Analyst @ RBC",
+    "Year": "2027",
+    "Github": "https://github.com/GrishiGitHub",
+    "Linkedin": "https://www.linkedin.com/in/grishma-gosain-b36603283/",
+    "X": ""
   },
   {
     "id": "vrunda",
     "name": "Vrunda Shah",
     "url": "https://vrunda.me",
     "tags": ["SWE", "Web"],
-    "blurb": "Third-year CS student at Laurier; shipping thoughtful web experiences."
+    "Role": "3rd year CS",
+    "Year": "2027",
+    "Github": "https://github.com/Vrundaa22",
+    "Linkedin": "https://www.linkedin.com/in/vrunda22/",
+    "X": ""
+  },
+  {
+    "id": "esha",
+    "name": "Esha Lodhi",
+    "url": "https://eshalod-portfolio.my.canva.site/",
+    "tags": ["Business", "Tech"],
+    "Role": "Communications @ GM and Communications @ ACE (Ontario Tech University)",
+    "Year": "2027",
+    "Github": "",
+    "Linkedin": "https://www.linkedin.com/in/esha-lodhi-a47907201/",
+    "X": ""
   }
 ]

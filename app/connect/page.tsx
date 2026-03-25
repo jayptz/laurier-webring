@@ -1,4 +1,5 @@
 import { RingWidget } from "../../components/RingWidget";
+import CopyToClipboardButton from "../../components/CopyToClipboardButton";
 import { webringPublicUrl } from "@/lib/webringPublicUrl";
 
 function buildEmbedSnippet(siteUrl: string) {
@@ -18,6 +19,17 @@ function buildEmbedSnippet(siteUrl: string) {
 export default function ConnectPage() {
   const siteUrl = webringPublicUrl();
   const embedSnippet = buildEmbedSnippet(siteUrl);
+  const memberJsonTemplate = `{
+  "id": "your-id",
+  "name": "Your Name",
+  "url": "https://your-site.com",
+  "tags": ["SWE", "Web"],
+  "Role": "Your role / title (shown under your name)",
+  "Year": "2027",
+  "Github": "",
+  "Linkedin": "",
+  "X": ""
+}`;
   return (
     <div className="min-h-screen px-6 py-16 sm:px-12 md:px-20 lg:px-32">
       <div className="mx-auto max-w-2xl space-y-12">
@@ -88,13 +100,40 @@ export default function ConnectPage() {
         </div>
 
         <div>
+          <h2 className="text-lg font-semibold text-gray-900">
+            members.json entry (copy/paste)
+          </h2>
+          <p className="mt-1 text-sm text-gray-500">
+            Replace the placeholders with your info. Leave socials blank if
+            you don&apos;t want the icons shown.
+          </p>
+          <div className="relative mt-3">
+            <CopyToClipboardButton
+              text={memberJsonTemplate}
+              ariaLabel="Copy members.json template"
+            />
+            <pre className="overflow-x-auto rounded-lg border border-border bg-card pr-14 p-4 text-xs leading-relaxed text-gray-700">
+              <code>{memberJsonTemplate}</code>
+            </pre>
+          </div>
+          <p className="mt-2 text-xs text-gray-400">
+            `Github`, `Linkedin`, and `X` must be full URLs (start with
+            `https://`), not just usernames.
+          </p>
+        </div>
+
+        <div>
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold text-gray-900">
               Embed Snippet
             </h2>
           </div>
           <div className="relative mt-3">
-            <pre className="overflow-x-auto rounded-lg border border-border bg-card p-4 text-xs leading-relaxed text-gray-700">
+            <CopyToClipboardButton
+              text={embedSnippet}
+              ariaLabel="Copy widget embed snippet"
+            />
+            <pre className="overflow-x-auto rounded-lg border border-border bg-card pr-14 p-4 text-xs leading-relaxed text-gray-700">
               <code>{embedSnippet}</code>
             </pre>
           </div>
