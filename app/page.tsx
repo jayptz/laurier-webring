@@ -44,6 +44,7 @@ const students = [
 
 import members from "@/data/members.json";
 import { WEBRING_HUB_FROM } from "@/lib/webringHubFrom";
+import { WeBringTooltip } from "../components/WeBringTooltip";
 import { RingGraph } from "../components/RingGraph";
 import { RingWidget } from "../components/RingWidget";
 import { SearchableMemberList } from "../components/SearchableMemberList";
@@ -118,18 +119,7 @@ export default function Home() {
                 <p className="text-base leading-relaxed text-gray-600">
                   Welcome to the official{" "}
                   <span className="relative inline-block group">
-                    <button
-                      type="button"
-                      className="cursor-help bg-yellow-200 underline decoration-dotted underline-offset-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-purple/60"
-                      aria-label="What is a webring?"
-                    >
-                      webring
-                    </button>
-                    <span className="pointer-events-none absolute left-1/2 top-full z-10 mt-2 w-64 -translate-x-1/2 rounded-md border border-border bg-background/95 px-3 py-2 text-xs leading-snug text-foreground shadow-lg opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-within:opacity-100 group-active:opacity-100">
-                      A webring (or web ring) is a collection of websites linked
-                      together in a circular structure, usually organized around a
-                      specific theme, and often educational or social.
-                    </span>
+                    <WeBringTooltip />
                   </span>{" "}
                   of students studying CS at{" "}
                   <a
