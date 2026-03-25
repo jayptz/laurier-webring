@@ -2,23 +2,68 @@ import { RingWidget } from "../../components/RingWidget";
 import CopyToClipboardButton from "../../components/CopyToClipboardButton";
 import { webringPublicUrl } from "@/lib/webringPublicUrl";
 
-function buildEmbedSnippet(siteUrl: string) {
-  return `<!-- WLU WebRing Widget — points to ${siteUrl} -->
-<div style="display:flex;justify-content:center;padding:16px 0;">
-  <nav style="display:inline-flex;align-items:center;gap:16px;border:1px solid #b39670;border-radius:9999px;background:#fff;padding:8px 20px;font-family:system-ui,sans-serif;font-size:14px;box-shadow:0 1px 2px rgba(0,0,0,0.05);">
-    <a href="${siteUrl}/api/prev?from=YOUR_ID" style="color:#4B2E83;text-decoration:none;font-weight:500;">&larr; Prev</a>
-    <a href="${siteUrl}" style="display:flex;align-items:center;gap:6px;text-decoration:none;">
-      <img src="${siteUrl}/wlu-logo.png" alt="WLU" width="24" height="24" style="height:24px;width:24px;">
-      <span style="font-weight:600;color:#4B2E83;">WLU</span>
-    </a>
-    <a href="${siteUrl}/api/next?from=YOUR_ID" style="color:#4B2E83;text-decoration:none;font-weight:500;">Next &rarr;</a>
-  </nav>
-</div>`;
+function buildReactEmbedSnippet(siteUrl: string) {
+  return `<!-- WLU WebRing Widget (React/JSX) — points to ${siteUrl} -->
+import React from "react";
+
+const WEBRING_URL = "${siteUrl}"; // e.g. https://laurier.network
+
+export function WluWebRingWidget({ memberId = "YOUR_ID" }) {
+  const prevHref = \`\${WEBRING_URL}/api/prev?from=\${encodeURIComponent(memberId)}\`;
+  const nextHref = \`\${WEBRING_URL}/api/next?from=\${encodeURIComponent(memberId)}\`;
+
+  return (
+    <div style={{ display: "flex", justifyContent: "center", padding: "16px 0" }}>
+      <nav
+        style={{
+          display: "grid",
+          width: "100%",
+          maxWidth: 448,
+          gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+          alignItems: "center",
+          gap: 12,
+          color: "#6B7280",
+          fontSize: 16,
+        }}
+      >
+        <a
+          href={prevHref}
+          style={{ justifySelf: "start", fontWeight: 500, textDecoration: "none", color: "#6B7280" }}
+          aria-label="Previous member"
+        >
+          \u2190
+        </a>
+
+        <a
+          href={WEBRING_URL}
+          style={{ display: "flex", justifyContent: "center", textDecoration: "none" }}
+          aria-label="WLU WebRing home"
+        >
+          <img
+            src={\`\${WEBRING_URL}/laurier-goldenhawk.svg\`}
+            alt="Golden Hawk"
+            width={32}
+            height={32}
+            style={{ height: 32, width: 32, filter: "grayscale(100%)" }}
+          />
+        </a>
+
+        <a
+          href={nextHref}
+          style={{ justifySelf: "end", fontWeight: 500, textDecoration: "none", color: "#6B7280" }}
+          aria-label="Next member"
+        >
+          \u2192
+        </a>
+      </nav>
+    </div>
+  );
+}`;
 }
 
 export default function ConnectPage() {
   const siteUrl = webringPublicUrl();
-  const embedSnippet = buildEmbedSnippet(siteUrl);
+  const embedSnippet = buildReactEmbedSnippet(siteUrl);
   const memberJsonTemplate = `{
   "id": "your-id",
   "name": "Your Name",
@@ -93,8 +138,8 @@ export default function ConnectPage() {
               in the snippet below with your member id
             </li>
             <li>
-              Paste the HTML into your site&apos;s footer or wherever you&apos;d
-              like the widget
+              Paste the React/JSX component into your portfolio (e.g. footer)
+              where you want the widget to appear
             </li>
           </ol>
         </div>
@@ -138,12 +183,9 @@ export default function ConnectPage() {
             </pre>
           </div>
           <p className="mt-2 text-xs text-gray-400">
-            Copy and paste this HTML into your site. Replace{" "}
+            Copy/paste this React/JSX component. Replace{" "}
             <code className="text-purple-600">YOUR_ID</code> with your member
-            id from members.json. Use a custom domain by setting{" "}
-            <code className="text-purple-600">NEXT_PUBLIC_WEBRING_URL</code>{" "}
-            when building or deploying this app so the snippet matches your
-            production URL.
+            id from `members.json`.
           </p>
         </div>
       </div>
