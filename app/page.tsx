@@ -117,7 +117,7 @@ export default function Home() {
               </a>
               <div className="min-w-0">
                 <p className="text-base leading-relaxed text-gray-600">
-                  Welcome to the official{" "}
+                  Welcome to the {" "}
                   <span className="relative inline-block group">
                     <WeBringTooltip />
                   </span>{" "}
@@ -128,9 +128,9 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className="text-purple-700 underline decoration-purple/30 underline-offset-2 transition-colors hover:text-purple-dark hover:decoration-purple"
                   >
-                    WLU
+                    Wilfrid Laurier University.
                   </a>{" "}
-                  in Ontario, Canada. This is an ongoing project to showcase talent
+                   This is an ongoing project to showcase talent
                   across Laurier. Look through the Hawks and see their work.
                 </p>
                 <p className="mt-6 text-base leading-relaxed text-gray-600">
