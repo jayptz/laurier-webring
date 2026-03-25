@@ -21,11 +21,15 @@ Want to join the ring? Visit [/connect](http://localhost:3000/connect) for instr
 
 ```json
 {
-  "id": "your-name",
+  "id": "your-id",
   "name": "Your Name",
   "url": "https://your-site.com",
-  "tags": ["SWE", "AI"],
-  "blurb": "A short description of what you do."
+  "tags": ["SWE", "Web"],
+  "Role": "Your role / title (shown under your name)",
+  "Year": "2027",
+  "Github": "",
+  "Linkedin": "",
+  "X": ""
 }
 ```
 

@@ -42,10 +42,43 @@ const students = [
   { name: "David Turner", year: "Security @ Deloitte", gradYear: "2027", website: "https://davidturner.io", socials: ["GitHub"] },
 ];
 
+import members from "@/data/members.json";
 import { WEBRING_HUB_FROM } from "@/lib/webringHubFrom";
 import { RingGraph } from "../components/RingGraph";
 import { RingWidget } from "../components/RingWidget";
 import { SearchableMemberList } from "../components/SearchableMemberList";
+
+const studentsFromMembersJson = members.map((m: any) => {
+  const asUrlOrEmpty = (v: unknown): string => {
+    if (typeof v !== "string") return "";
+    const s = v.trim();
+    // Expect full URLs so the icons can be clickable.
+    return /^https?:\/\//i.test(s) ? s : "";
+  };
+
+  const socials: { kind: "GitHub" | "LinkedIn" | "Twitter"; url: string }[] =
+    [];
+
+  const githubUrl = asUrlOrEmpty(m.Github ?? m.github ?? m.GitHub);
+  if (githubUrl) socials.push({ kind: "GitHub", url: githubUrl });
+
+  const linkedinUrl = asUrlOrEmpty(m.Linkedin ?? m.linkedin ?? m.LinkedIn);
+  if (linkedinUrl) socials.push({ kind: "LinkedIn", url: linkedinUrl });
+
+  // JSON uses `X` but the icon key is `Twitter`.
+  const xUrl = asUrlOrEmpty(m.X ?? m.Twitter ?? m.twitter);
+  if (xUrl) socials.push({ kind: "Twitter", url: xUrl });
+
+  return {
+    name: m.name as string,
+    year: (m.Role ?? m.role ?? "") as string,
+    gradYear: (m.Year ?? m.GradYear ?? m.gradYear ?? undefined) as
+      | string
+      | undefined,
+    website: m.url as string,
+    socials,
+  };
+});
 
 /** Shared card chrome (border, padding) — tighter on very small screens. */
 const cardSurface =
@@ -133,13 +166,13 @@ export default function Home() {
           <div
             className={`${ringColumnFrame} min-w-0 overflow-hidden touch-manipulation`}
           >
-            <RingGraph members={students} />
+            <RingGraph members={studentsFromMembersJson} />
           </div>
         </div>
 
         <div className="relative z-10 flex min-w-0 max-md:order-2 flex-col gap-8">
           <div className={`${ringColumnFrame} ${cardSurface}`}>
-            <SearchableMemberList students={students} />
+            <SearchableMemberList students={studentsFromMembersJson} />
           </div>
         </div>
       </div>
