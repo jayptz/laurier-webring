@@ -152,9 +152,9 @@ Example customization (from https://www.jayptz.me/):
 If you like this project:
 
 - ⭐ Star the repo  
--  hare it with other Laurier devs  
+-  share it with other Laurier devs  
 -  Add your portfolio  
 
 ---
 
-If you're one of us, we welcome you with open arms (or in this case, open PRs).
+If you're one of us, we welcome you.
