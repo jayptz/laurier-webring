@@ -47,11 +47,51 @@ function truncate(str: string, maxLen = 15): string {
 
 function matchesSearch(student: Student, term: string): boolean {
   const t = term.toLowerCase();
+  return student.name.toLowerCase().includes(t);
+}
+
+function relevanceScore(student: Student, term: string): number {
+  const t = term.toLowerCase().trim();
+  if (!t) return 0;
+
+  const name = student.name.toLowerCase();
+  const role = student.year.toLowerCase();
+  const website = student.website.toLowerCase();
+  const grad = (student.gradYear ?? "").toLowerCase();
+
+  // Heavier weight to name matches, then role/company, then website/year.
+  if (name === t) return 100;
+  if (name.startsWith(t)) return 80;
+  if (name.includes(t)) return 60;
+  if (role.startsWith(t)) return 50;
+  if (role.includes(t)) return 40;
+  if (website.includes(t)) return 30;
+  if (grad.includes(t)) return 20;
+  return 0;
+}
+
+function highlightMatch(text: string, term: string): ReactElement | string {
+  const q = term.trim();
+  if (!q) return text;
+
+  const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const re = new RegExp(`(${escaped})`, "ig");
+  const parts = text.split(re);
+
+  if (parts.length === 1) return text;
+
   return (
-    student.name.toLowerCase().includes(t) ||
-    student.year.toLowerCase().includes(t) ||
-    (student.gradYear?.toLowerCase().includes(t) ?? false) ||
-    student.website.toLowerCase().includes(t)
+    <>
+      {parts.map((part, i) =>
+        part.toLowerCase() === q.toLowerCase() ? (
+          <mark key={`${part}-${i}`} className="bg-yellow-200/70 px-0.5 text-inherit">
+            {part}
+          </mark>
+        ) : (
+          <span key={`${part}-${i}`}>{part}</span>
+        ),
+      )}
+    </>
   );
 }
 
@@ -76,8 +116,18 @@ export function SearchableMemberList({
 }) {
   const [search, setSearch] = useState("");
 
-  const filtered = search.trim()
-    ? students.filter((s) => matchesSearch(s, search))
+  const query = search.trim().toLowerCase();
+  const nameMatches = query
+    ? students.filter((s) => matchesSearch(s, query))
+    : students;
+  const exactMatches = query
+    ? nameMatches.filter((s) => s.name.toLowerCase() === query)
+    : [];
+
+  const filtered = query
+    ? (exactMatches.length > 0 ? exactMatches : nameMatches).sort(
+        (a, b) => relevanceScore(b, query) - relevanceScore(a, query),
+      )
     : students;
 
   const handleInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -124,7 +174,9 @@ export function SearchableMemberList({
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                      <div className="font-medium text-gray-900">{student.name}</div>
+                      <div className="font-medium text-gray-900">
+                        {highlightMatch(student.name, search)}
+                      </div>
                       <div className="text-xs text-gray-600 whitespace-nowrap">
                         {formatGradYearMobile(student.gradYear)}
                       </div>
@@ -211,7 +263,7 @@ export function SearchableMemberList({
                         <td className="py-4 pr-1 align-top">
                           <div>
                             <span className="font-medium text-gray-900" title={student.name}>
-                              {student.name}
+                              {highlightMatch(student.name, search)}
                             </span>
                             <span className="block text-xs text-gray-600 mt-0.5" title={student.year}>
                               {student.year}

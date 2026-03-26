@@ -49,6 +49,8 @@ import { RingGraph } from "../components/RingGraph";
 import { RingWidget } from "../components/RingWidget";
 import { SearchableMemberList } from "../components/SearchableMemberList";
 
+export const dynamic = "force-dynamic";
+
 const studentsFromMembersJson = members.map((m: any) => {
   const asUrlOrEmpty = (v: unknown): string => {
     if (typeof v !== "string") return "";
@@ -87,8 +89,111 @@ const cardSurface =
 
 /** Full-width in column; min-w-0 prevents grid/flex overflow on narrow viewports. */
 const ringColumnFrame = "w-full min-w-0 max-w-2xl shrink-0";
+const memberListColumnFrame = "w-full min-w-0 shrink-0";
 
-export default function Home() {
+const edgeCaseCompanies = [
+  "RBC",
+  "Shopify",
+  "Google",
+  "Amazon",
+  "Microsoft",
+  "Meta",
+  "Stripe",
+  "Scotiabank",
+  "CIBC",
+  "TD",
+];
+
+const edgeCaseRoles = [
+  "Software Engineer",
+  "Product Analyst",
+  "Frontend Developer",
+  "Backend Engineer",
+  "Data Analyst",
+  "DevOps Engineer",
+  "Full Stack Developer",
+  "ML Engineer",
+];
+
+const edgeCaseFirstNames = [
+  "Aarav",
+  "Maya",
+  "Noah",
+  "Zara",
+  "Ibrahim",
+  "Sofia",
+  "Leo",
+  "Priya",
+  "Ethan",
+  "Aisha",
+  "Lucas",
+  "Anika",
+  "Owen",
+  "Nora",
+  "Rohan",
+  "Layla",
+  "Mason",
+  "Diya",
+  "Arjun",
+  "Chloe",
+];
+
+const edgeCaseLastNames = [
+  "Patel",
+  "Singh",
+  "Chen",
+  "Khan",
+  "Wilson",
+  "Garcia",
+  "Brown",
+  "Nguyen",
+  "Davis",
+  "Sharma",
+  "Ali",
+  "Martin",
+  "Wong",
+  "Taylor",
+  "Clark",
+  "Ahmed",
+  "Lopez",
+  "Baker",
+  "Scott",
+  "Reed",
+];
+
+export default function Home({
+  searchParams: _searchParams,
+}: {
+  searchParams?: { members?: string | string[] };
+}) {
+  const pinnedMembers = studentsFromMembersJson.filter((m) =>
+    ["Jay Patel", "Vrunda Shah", "Grishma Gosain"].includes(m.name),
+  );
+
+  const generatedMembers: typeof studentsFromMembersJson = Array.from({ length: 40 - pinnedMembers.length }, (_, i) => {
+    const firstName = edgeCaseFirstNames[i % edgeCaseFirstNames.length];
+    const lastName = edgeCaseLastNames[
+      (i + Math.floor(i / edgeCaseFirstNames.length)) % edgeCaseLastNames.length
+    ];
+    const name = `${firstName} ${lastName}`;
+    const slug = `${firstName}-${lastName}`.toLowerCase();
+    const role = edgeCaseRoles[i % edgeCaseRoles.length];
+    const company = edgeCaseCompanies[i % edgeCaseCompanies.length];
+
+    return {
+      name,
+      year: `${role} @ ${company}`,
+      gradYear: "2027",
+      website: `https://${slug}.dev`,
+      socials: [
+        { kind: "GitHub" as const, url: `https://github.com/${slug}` },
+        { kind: "LinkedIn" as const, url: `https://www.linkedin.com/in/${slug}` },
+        { kind: "Twitter" as const, url: `https://x.com/${slug}` },
+      ],
+    };
+  });
+  const studentsForUI = [...pinnedMembers, ...generatedMembers];
+
   return (
     <div className="min-h-screen px-6 py-16 sm:px-12 md:px-20 lg:px-32">
       {/*
@@ -161,7 +266,7 @@ export default function Home() {
             <div
               className={`${ringColumnFrame} min-w-0 overflow-hidden touch-manipulation`}
             >
-              <RingGraph members={studentsFromMembersJson} />
+              <RingGraph members={studentsForUI} />
             </div>
 
             <p className="mt-0 self-start text-left text-[11px] text-gray-600">
@@ -179,8 +284,8 @@ export default function Home() {
         </div>
 
         <div className="relative z-10 flex min-w-0 max-md:order-2 flex-col gap-8">
-          <div className={`${ringColumnFrame} ${cardSurface}`}>
-            <SearchableMemberList students={studentsFromMembersJson} />
+          <div className={`${memberListColumnFrame} ${cardSurface}`}>
+            <SearchableMemberList students={studentsForUI} />
           </div>
         </div>
       </div>
