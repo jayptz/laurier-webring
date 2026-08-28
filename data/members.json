@@ -42,5 +42,16 @@
     "Github": "https://github.com/AhmadYahya-05",
     "Linkedin": "https://www.linkedin.com/in/ahmad-yahya-a69278140/",
     "X": ""
+  },
+  {
+    "id": "richard",
+    "name": "Richard Francis",
+    "url": "https://drahcir.ca",
+    "tags": ["SWE", "AI"],
+    "Role": "3rd Year CS",
+    "Year": "2027",
+    "Github": "https://github.com/drahcir8805",
+    "Linkedin": "https://www.linkedin.com/in/richard-francis-916587293/",
+    "X": ""
   }
 ]
